@@ -3,2008 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHubception</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
-            background-color: #0d1117;
-            color: #e6edf3;
-            line-height: 1.5;
-        }
-
-        .header {
-            background-color: #21262d;
-            border-bottom: 1px solid #30363d;
-            padding: 16px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #f78166, #fa7970);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .nav {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .nav a {
-            color: #e6edf3;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: background-color 0.2s;
-        }
-
-        .nav a:hover {
-            background-color: #30363d;
-        }
-
-        .search-bar {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: #e6edf3;
-            width: 300px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 32px;
-        }
-
-        .repo-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #30363d;
-        }
-
-        .repo-name {
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .repo-visibility {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            color: #7d8590;
-        }
-
-        .stats {
-            display: flex;
-            gap: 16px;
-            margin-left: auto;
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: #7d8590;
-            font-size: 14px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .stat:hover {
-            color: #e6edf3;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 24px;
-            border-bottom: 1px solid #30363d;
-        }
-
-        .tab {
-            padding: 12px 16px;
-            color: #7d8590;
-            text-decoration: none;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tab.active {
-            color: #e6edf3;
-            border-bottom-color: #f78166;
-        }
-
-        .tab:hover {
-            color: #e6edf3;
-        }
-
-        .file-browser {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .file-header {
-            background-color: #161b22;
-            padding: 12px 16px;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .branch-selector {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            color: #e6edf3;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .file-list {
-            list-style: none;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 16px;
-            border-bottom: 1px solid #30363d;
-            transition: background-color 0.2s;
-            cursor: pointer;
-        }
-
-        .file-item:hover {
-            background-color: #161b22;
-        }
-
-        .file-item:last-child {
-            border-bottom: none;
-        }
-
-        .file-icon {
-            width: 16px;
-            height: 16px;
-            margin-right: 12px;
-            color: #7d8590;
-        }
-
-        .file-name {
-            flex: 1;
-            color: #539bf5;
-            text-decoration: none;
-        }
-
-        .file-message {
-            color: #7d8590;
-            font-size: 14px;
-            margin-right: 16px;
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .file-time {
-            color: #7d8590;
-            font-size: 12px;
-            min-width: 100px;
-            text-align: right;
-        }
-
-        .btn {
-            background-color: #238636;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.2s;
-        }
-
-        .btn:hover {
-            background-color: #2ea043;
-        }
-
-        .btn-secondary {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            color: #e6edf3;
-        }
-
-        .btn-secondary:hover {
-            background-color: #30363d;
-        }
-
-        .btn-small {
-            padding: 4px 8px;
-            font-size: 12px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .modal-content {
-            background-color: #21262d;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            width: 80%;
-            max-width: 600px;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .close {
-            color: #7d8590;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            color: #e6edf3;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            background-color: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            color: #e6edf3;
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .file-editor {
-            background-color: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 16px;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 14px;
-            min-height: 400px;
-            white-space: pre-wrap;
-        }
-
-        .file-viewer {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-top: 24px;
-        }
-
-        .file-viewer-header {
-            background-color: #161b22;
-            padding: 12px 16px;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            justify-content: between;
-            align-items: center;
-        }
-
-        .file-viewer-content {
-            padding: 16px;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .breadcrumb {
-            margin-bottom: 16px;
-            color: #7d8590;
-        }
-
-        .breadcrumb a {
-            color: #539bf5;
-            text-decoration: none;
-        }
-
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-        .issue-item, .pr-item, .commit-item {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .status-open {
-            background-color: #238636;
-        }
-
-        .status-closed {
-            background-color: #f85149;
-        }
-
-        .item-details {
-            flex: 1;
-        }
-
-        .item-title {
-            font-weight: 500;
-            margin-bottom: 4px;
-            color: #e6edf3;
-        }
-
-        .item-meta {
-            font-size: 12px;
-            color: #7d8590;
-        }
-
-        .item-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .commit-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f78166, #fa7970);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        .commit-hash {
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            background-color: #161b22;
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon">G</div>
-            GitHubception
-        </div>
-        <nav class="nav">
-            <a href="#" onclick="showTab('code')">Repositories</a>
-            <a href="#" onclick="showTab('issues')">Issues</a>
-            <a href="#" onclick="showTab('pulls')">Pull requests</a>
-            <a href="#" onclick="showTab('actions')">Actions</a>
-            <a href="#" onclick="showTab('settings')">Settings</a>
-        </nav>
-        <input type="text" class="search-bar" id="searchBar" placeholder="Search repositories..." onkeyup="handleSearch(event)">
-    </header>
-
-    <div class="container">
-        <div class="repo-header">
-            <span class="repo-name">githubception/meta-repository</span>
-            <span class="repo-visibility">Public</span>
-            <div class="stats">
-                <div class="stat" onclick="toggleStar()">
-                    <span>⭐</span>
-                    <span id="starCount">42</span>
-                </div>
-                <div class="stat" onclick="toggleWatch()">
-                    <span>👁</span>
-                    <span id="watchCount">12</span>
-                </div>
-                <div class="stat">
-                    <span>🍴</span>
-                    <span id="forkCount">7</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="tabs">
-            <a href="#" class="tab active" onclick="showTab('code')">📄 Code</a>
-            <a href="#" class="tab" onclick="showTab('issues')">🐛 Issues <span id="issueCount" style="background: #21262d; padding: 2px 6px; border-radius: 10px; font-size: 12px;">3</span></a>
-            <a href="#" class="tab" onclick="showTab('pulls')">🔀 Pull requests <span id="prCount" style="background: #21262d; padding: 2px 6px; border-radius: 10px; font-size: 12px;">1</span></a>
-            <a href="#" class="tab" onclick="showTab('commits')">📝 Commits</a>
-            <a href="#" class="tab" onclick="showTab('actions')">⚡ Actions</a>
-            <a href="#" class="tab" onclick="showTab('settings')">⚙️ Settings</a>
-        </div>
-
-        <!-- Code Tab -->
-        <div id="code-content">
-            <div class="breadcrumb" id="breadcrumb">
-                <a href="#" onclick="navigateTo('')">githubception/meta-repository</a>
-            </div>
-            
-            <div class="file-browser">
-                <div class="file-header">
-                    <select class="branch-selector" id="branchSelector" onchange="switchBranch(this.value)">
-                        <option value="main">🌿 main</option>
-                        <option value="develop">🌿 develop</option>
-                        <option value="feature/recursive-git">🌿 feature/recursive-git</option>
-                    </select>
-                    <button class="btn btn-small" onclick="openNewFileModal()">+ New file</button>
-                    <button class="btn btn-secondary btn-small" onclick="openNewFolderModal()">📁 New folder</button>
-                    <span style="margin-left: auto; color: #7d8590; font-size: 14px;" id="lastCommit">Latest commit: 2 hours ago</span>
-                </div>
-                <ul class="file-list" id="fileList">
-                    <!-- Files will be populated by JavaScript -->
-                </ul>
-            </div>
-
-            <div class="file-viewer" id="fileViewer" style="display: none;">
-                <div class="file-viewer-header">
-                    <span id="fileName"></span>
-                    <div>
-                        <button class="btn btn-small" onclick="editFile()">✏️ Edit</button>
-                        <button class="btn btn-secondary btn-small" onclick="deleteFile()">🗑️ Delete</button>
-                        <button class="btn btn-secondary btn-small" onclick="backToList()">← Back</button>
-                    </div>
-                </div>
-                <div class="file-viewer-content" id="fileContent"></div>
-            </div>
-        </div>
-
-        <!-- Issues Tab -->
-        <div id="issues-content" style="display: none;">
-            <div class="file-browser">
-                <div class="file-header">
-                    <button class="btn" onclick="openNewIssueModal()">New issue</button>
-                    <select class="branch-selector" onchange="filterIssues(this.value)">
-                        <option value="all">All issues</option>
-                        <option value="open">Open</option>
-                        <option value="closed">Closed</option>
-                    </select>
-                </div>
-                <div style="padding: 24px;" id="issuesList">
-                    <!-- Issues will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Pull Requests Tab -->
-        <div id="pulls-content" style="display: none;">
-            <div class="file-browser">
-                <div class="file-header">
-                    <button class="btn" onclick="openNewPRModal()">New pull request</button>
-                </div>
-                <div style="padding: 24px;" id="prList">
-                    <!-- PRs will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Commits Tab -->
-        <div id="commits-content" style="display: none;">
-            <div class="file-browser">
-                <div class="file-header">
-                    <span>Commit history for <strong id="commitBranch">main</strong></span>
-                </div>
-                <div style="padding: 24px;" id="commitsList">
-                    <!-- Commits will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Actions Tab -->
-        <div id="actions-content" style="display: none;">
-            <div class="file-browser">
-                <div class="file-header">
-                    <span>GitHub Actions</span>
-                    <button class="btn" onclick="runAction()">Run workflow</button>
-                </div>
-                <div style="padding: 24px;">
-                    <div class="commit-item">
-                        <div class="status-indicator status-open"></div>
-                        <div class="item-details">
-                            <div class="item-title">CI/CD Pipeline</div>
-                            <div class="item-meta">Last run: 2 hours ago • Status: Passing ✅</div>
-                        </div>
-                        <button class="btn btn-small" onclick="viewActionLogs()">View logs</button>
-                    </div>
-                    <div class="commit-item">
-                        <div class="status-indicator status-closed"></div>
-                        <div class="item-details">
-                            <div class="item-title">Recursive Test Suite</div>
-                            <div class="item-meta">Last run: 1 day ago • Status: Failed ❌</div>
-                        </div>
-                        <button class="btn btn-small" onclick="viewActionLogs()">View logs</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Tab -->
-        <div id="settings-content" style="display: none;">
-            <div class="file-browser">
-                <div class="file-header">
-                    <span>Repository Settings</span>
-                </div>
-                <div style="padding: 24px;">
-                    <div class="form-group">
-                        <label>Repository Name</label>
-                        <input type="text" value="githubception/meta-repository" onchange="updateRepoName(this.value)">
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea>A recursive GitHub implementation that manages itself</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Visibility</label>
-                        <select>
-                            <option value="public" selected>Public</option>
-                            <option value="private">Private</option>
-                        </select>
-                    </div>
-                    <button class="btn">Save settings</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modals -->
-    <div id="fileModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">New File</h3>
-                <span class="close" onclick="closeModal('fileModal')">&times;</span>
-            </div>
-            <div class="form-group">
-                <label>File Name</label>
-                <input type="text" id="modalFileName" placeholder="example.js">
-            </div>
-            <div class="form-group">
-                <label>Content</label>
-                <textarea id="modalFileContent" class="file-editor" placeholder="// Enter your code here..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Commit Message</label>
-                <input type="text" id="modalCommitMessage" placeholder="Add new file">
-            </div>
-            <button class="btn" onclick="saveFile()">Commit file</button>
-            <button class="btn btn-secondary" onclick="closeModal('fileModal')">Cancel</button>
-        </div>
-    </div>
-
-    <div id="issueModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>New Issue</h3>
-                <span class="close" onclick="closeModal('issueModal')">&times;</span>
-            </div>
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="issueTitle" placeholder="Brief description of the issue">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="issueDescription" placeholder="Detailed description of the issue..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Labels</label>
-                <select id="issueLabel">
-                    <option value="bug">🐛 Bug</option>
-                    <option value="enhancement">✨ Enhancement</option>
-                    <option value="question">❓ Question</option>
-                    <option value="documentation">📚 Documentation</option>
-                </select>
-            </div>
-            <button class="btn" onclick="createIssue()">Create issue</button>
-            <button class="btn btn-secondary" onclick="closeModal('issueModal')">Cancel</button>
-        </div>
-    </div>
-
-    <div id="prModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>New Pull Request</h3>
-                <span class="close" onclick="closeModal('prModal')">&times;</span>
-            </div>
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="prTitle" placeholder="Brief description of changes">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="prDescription" placeholder="Describe your changes..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Base Branch</label>
-                <select id="prBaseBranch">
-                    <option value="main">main</option>
-                    <option value="develop">develop</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Compare Branch</label>
-                <select id="prCompareBranch">
-                    <option value="feature/recursive-git">feature/recursive-git</option>
-                    <option value="develop">develop</option>
-                </select>
-            </div>
-            <button class="btn" onclick="createPR()">Create pull request</button>
-            <button class="btn btn-secondary" onclick="closeModal('prModal')">Cancel</button>
-        </div>
-    </div>
-
-    <script>
-        // Global state management
-        let gitData = {
-            currentBranch: 'main',
-            currentPath: '',
-            branches: {
-                'main': {
-                    files: {
-                        '.github/workflows/ci.yml': {
-                            content: `name: CI\non:\n  push:\n    branches: [ main ]\n  pull_request:\n    branches: [ main ]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v2\n    - name: Setup Node.js\n      uses: actions/setup-node@v2\n      with:\n        node-version: '16'\n    - run: npm ci\n    - run: npm test`,
-                            lastModified: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-                            message: 'Add GitHub Actions workflow'
-                        },
-                        'src/index.js': {
-                            content: `// GitHubception - A recursive Git interface\n\nclass GitHubception {\n  constructor() {\n    this.repos = new Map();\n    this.init();\n  }\n\n  init() {\n    console.log('Initializing GitHubception...');\n    this.createMetaRepo();\n  }\n\n  createMetaRepo() {\n    // Create a repository that manages itself\n    const metaRepo = {\n      name: 'meta-repository',\n      description: 'A repository that contains itself',\n      files: this.getOwnFiles()\n    };\n    \n    this.repos.set('meta-repository', metaRepo);\n  }\n\n  getOwnFiles() {\n    // This is where the magic happens - self-reference!\n    return {\n      'src/index.js': this.constructor.toString(),\n      'README.md': this.generateReadme(),\n      'package.json': this.generatePackageJson()\n    };\n  }\n\n  // Recursive function to handle infinite depth\n  dive(depth = 0) {\n    if (depth > 100) {\n      throw new Error('Maximum recursion depth reached!');\n    }\n    return new GitHubception().dive(depth + 1);\n  }\n}\n\n// Initialize the recursive nightmare\nconst github = new GitHubception();\nexport default github;`,
-                            lastModified: new Date(Date.now() - 2 * 60 * 60 * 1000),
-                            message: 'Implement recursive git interface'
-                        },
-                        'src/components/FileTree.js': {
-                            content: `import React, { useState } from 'react';\n\nfunction FileTree({ files, onFileSelect }) {\n  const [expanded, setExpanded] = useState(new Set());\n\n  const toggleExpanded = (path) => {\n    const newExpanded = new Set(expanded);\n    if (newExpanded.has(path)) {\n      newExpanded.delete(path);\n    } else {\n      newExpanded.add(path);\n    }\n    setExpanded(newExpanded);\n  };\n\n  return (\n    <div className="file-tree">\n      {Object.keys(files).map(path => (\n        <FileNode\n          key={path}\n          path={path}\n          isExpanded={expanded.has(path)}\n          onToggle={toggleExpanded}\n          onSelect={onFileSelect}\n        />\n      ))}\n    </div>\n  );\n}\n\nfunction FileNode({ path, isExpanded, onToggle, onSelect }) {\n  const isDirectory = path.endsWith('/');\n  const fileName = path.split('/').pop();\n\n  return (\n    <div className="file-node">\n      <div \n        className="file-item"\n        onClick={() => isDirectory ? onToggle(path) : onSelect(path)}\n      >\n        <span className="file-icon">\n          {isDirectory ? (isExpanded ? '📂' : '📁') : '📄'}\n        </span>\n        <span className="file-name">{fileName}</span>\n      </div>\n    </div>\n  );\n}\n\nexport default FileTree;`,
-                            lastModified: new Date(Date.now() - 5 * 60 * 60 * 1000),
-                            message: 'Add file tree component'
-                        },
-                        'docs/README.md': {
-                            content: `# GitHubception Documentation\n\n## Overview\n\nGitHubception is a meta-repository that implements GitHub functionality within a GitHub repository. This creates an interesting recursive loop where the platform manages itself.\n\n## Architecture\n\n### Core Concepts\n\n1. **Self-Reference**: The repository contains its own source code\n2. **Recursive Operations**: Git operations that operate on themselves\n3. **Meta-Programming**: Code that modifies itself\n\n### File Structure\n\n\`\`\`\nsrc/\n├── index.js           # Main application entry\n├── components/        # UI components\n│   ├── FileTree.js   # File browser component\n│   └── Editor.js     # Code editor component\n├── git/              # Git operations\n│   ├── repository.js # Repository management\n│   └── commits.js    # Commit handling\nand utils/            # Utility functions\n\`\`\`\n\n## Philosophy\n\nThis project explores the boundaries between tool and creation, asking fundamental questions about digital self-reference and the nature of version control.\n\n### The Recursive Paradox\n\nWhat happens when a version control system versions itself? We enter a space where:\n\n- Changes to the system change how changes are tracked\n- The history includes the history of tracking history\n- Bugs in the system affect the system's ability to track bugs\n\n## Installation\n\n\`\`\`bash\nnpm install githubception\n\`\`\`\n\n## Usage\n\n\`\`\`javascript\nimport GitHubception from 'githubception';\n\nconst repo = new GitHubception();\nrepo.init(); // Initialize the recursive loop\n\`\`\`\n\n## Warning\n\n⚠️ This software may cause existential crises in developers who think too deeply about self-referential systems.\n\n## Contributing\n\nTo contribute to GitHubception, you must first understand that you're contributing to a system that tracks contributions to itself. Your contribution will become part of the system that tracks your contribution.\n\nMind-bending, isn't it?`,
-                            lastModified: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-                            message: 'Update documentation'
-                        },
-                        '.gitignore': {
-                            content: `# Dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
-
-# nyc test coverage
-.nyc_output
-
-# Grunt intermediate storage
-.grunt
-
-# Bower dependency directory
-bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons
-build/Release
-
-# Dependency directories
-node_modules/
-jspm_packages/
-
-# TypeScript v1 declaration files
-typings/
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
-.env
-.env.test
-
-# parcel-bundler cache
-.cache
-.parcel-cache
-
-# Next.js build output
-.next
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-public
-
-# Storybook build outputs
-.out
-.storybook-out
-
-# Temporary folders
-tmp/
-temp/
-
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-
-# Directory for instrumented libs generated by jscoverage/JSCover
-lib-cov
-
-# Coverage directory used by tools like istanbul
-coverage
-
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
-# Users Environment Variables
-.lock-wscript
-
-# IDEs and editors (shamelessly copied from GitLab gitignore template)
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db`,
-                            lastModified: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-                            message: 'Add common ignore patterns'
-                        },
-                        'package.json': {
-                            content: `{
-  "name": "githubception",
-  "version": "1.0.0",
-  "description": "A recursive GitHub implementation that manages itself",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "test": "jest",
-    "build": "webpack --mode production",
-    "lint": "eslint src/",
-    "recursive-test": "npm test && npm run recursive-test"
-  },
-  "keywords": [
-    "git",
-    "github",
-    "recursive",
-    "meta-programming",
-    "version-control",
-    "self-reference"
-  ],
-  "author": "The GitHubception Team",
-  "license": "MIT",
-  "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "express": "^4.18.0",
-    "ws": "^8.5.0",
-    "simple-git": "^3.7.0"
-  },
-  "devDependencies": {
-    "jest": "^28.0.0",
-    "@testing-library/react": "^13.0.0",
-    "eslint": "^8.0.0",
-    "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.0",
-    "nodemon": "^2.0.15"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/githubception/meta-repository.git"
-  },
-  "bugs": {
-    "url": "https://github.com/githubception/meta-repository/issues"
-  },
-  "homepage": "https://github.com/githubception/meta-repository#readme"
-}`,
-                            lastModified: new Date(Date.now() - 2 * 60 * 60 * 1000),
-                            message: 'Update dependencies'
-                        },
-                        'README.md': {
-                            content: `# GitHubception 🌀
-
-> "We need to go deeper..." - Inception, but for Git
-
-A meta-repository that implements GitHub inside GitHub. This project demonstrates the recursive nature of version control by creating a Git interface that can be hosted on Git platforms.
-
-## 🤯 What is GitHubception?
-
-GitHubception is a fully functional GitHub clone that manages itself. It's a repository that contains the code for a GitHub-like interface, which can then be used to manage the very repository it lives in. 
-
-Think of it as Git managing Git managing Git... ad infinitum.
-
-## ✨ Features
-
-- 🏠 **Complete GitHub Interface**: Repository browsing, file management, issues, PRs
-- 🌿 **Branch Management**: Switch between branches, create new ones
-- 📝 **File Operations**: Create, edit, delete files and folders
-- 🐛 **Issue Tracking**: Full issue management system
-- 🔀 **Pull Requests**: Create and manage pull requests
-- 📊 **Repository Stats**: Stars, watchers, forks with real interaction
-- ⚡ **GitHub Actions**: Simulated CI/CD workflows
-- 🔍 **Search**: Find files, issues, and commits
-- 📈 **Live Updates**: Real-time statistics and notifications
-
-## 🚀 Getting Started
-
-### Installation
-
-\`\`\`bash
-git clone https://github.com/githubception/meta-repository.git
-cd meta-repository
-npm install
-npm start
-\`\`\`
-
-### Usage
-
-Once running, you can:
-
-1. **Browse Files**: Navigate through the repository structure
-2. **Edit Code**: Modify files directly in the browser
-3. **Manage Issues**: Create and track bugs and features
-4. **Handle PRs**: Review and merge pull requests
-5. **Monitor Actions**: Watch CI/CD pipelines run
-
-## 🎭 The Recursive Loop
-
-This repository contains:
-- The source code for GitHubception
-- Issues about GitHubception
-- Pull requests to improve GitHubception
-- Documentation about GitHubception
-- GitHub Actions that test GitHubception
-
-When you use GitHubception to manage this repository, you're using the tool to manage itself. Every change you make affects both the content and the platform viewing it.
-
-## 🧠 Philosophy
-
-GitHubception explores fascinating questions:
-
-- What happens when a tool manages itself?
-- Can version control version its own version control?
-- Where does the tool end and the content begin?
-
-This project exists in the liminal space between platform and content, tool and creation.
-
-## ⚠️ Warning
-
-Extended use of GitHubception may cause:
-- Existential confusion about the nature of digital tools
-- Recursive thinking patterns
-- An irresistible urge to create more self-referential software
-- Temporary disorientation when switching back to "normal" GitHub
-
-## 🤝 Contributing
-
-To contribute to GitHubception:
-
-1. Use GitHubception to create an issue about GitHubception
-2. Use GitHubception to fork GitHubception
-3. Use GitHubception to make changes to GitHubception
-4. Use GitHubception to create a PR for GitHubception
-5. Use GitHubception to review the PR about GitHubception
-6. Use GitHubception to merge the changes into GitHubception
-
-Yes, it's as mind-bending as it sounds.
-
-## 📜 License
-
-MIT License - Because even recursive nightmares should be free.
-
-## 🌟 Star This Repository
-
-If GitHubception broke your brain in a good way, give it a star! The star counter is fully functional and will update in real-time.
-
----
-
-*"In the beginning was the Repository, and the Repository was with Git, and the Repository was Git."* - GitHubception 1:1`,
-                            lastModified: new Date(Date.now() - 4 * 60 * 60 * 1000),
-                            message: 'Add installation instructions'
-                        }
-                    },
-                    commits: [
-                        {
-                            hash: 'a1b2c3d',
-                            message: 'Implement recursive repository browser',
-                            author: 'meta-programmer',
-                            date: new Date(Date.now() - 2 * 60 * 60 * 1000),
-                            changes: ['src/index.js', 'src/components/FileTree.js']
-                        },
-                        {
-                            hash: 'd4e5f6g',
-                            message: 'Add GitHub Actions for CI/CD of GitHub clone',
-                            author: 'automation-bot',
-                            date: new Date(Date.now() - 4 * 60 * 60 * 1000),
-                            changes: ['.github/workflows/ci.yml']
-                        },
-                        {
-                            hash: 'g7h8i9j',
-                            message: 'Fix infinite loop in self-referential logic',
-                            author: 'bug-hunter',
-                            date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-                            changes: ['src/index.js']
-                        },
-                        {
-                            hash: 'j1k2l3m',
-                            message: 'Add installation instructions',
-                            author: 'docs-writer',
-                            date: new Date(Date.now() - 4 * 60 * 60 * 1000),
-                            changes: ['README.md']
-                        },
-                        {
-                            hash: '1a2b3c4',
-                            message: 'Initial commit: The beginning of the end',
-                            author: 'paradox-dev',
-                            date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-                            changes: ['README.md', 'package.json', '.gitignore']
-                        }
-                    ]
-                },
-                'develop': {
-                    files: {
-                        'experimental/quantum-git.js': {
-                            content: `// Quantum Git - Superposition of all possible repositories\n\nclass QuantumRepository {\n  constructor() {\n    this.state = 'superposition';\n    this.branches = ['all', 'none', 'both'];\n  }\n\n  observe() {\n    // Act of observation collapses the quantum state\n    this.state = Math.random() > 0.5 ? 'exists' : 'doesnt_exist';\n    return this.state;\n  }\n\n  commit(message) {\n    // Quantum commits exist in all possible states simultaneously\n    return {\n      committed: true,\n      not_committed: true,\n      maybe_committed: true,\n      hash: this.generateQuantumHash()\n    };\n  }\n\n  generateQuantumHash() {\n    // Hash exists in quantum superposition until observed\n    return 'q' + Math.random().toString(36).substr(2, 9);\n  }\n}\n\nexport default QuantumRepository;`,
-                            lastModified: new Date(Date.now() - 1 * 60 * 60 * 1000),
-                            message: 'Add experimental quantum features'
-                        },
-                        'src/advanced-recursion.js': {
-                            content: `// Advanced Recursion - Going deeper than ever before\n\nclass InfiniteRecursion {\n  constructor(depth = 0) {\n    this.depth = depth;\n    this.maxDepth = Infinity; // YOLO\n  }\n\n  recurse() {\n    console.log(\`Recursion depth: \${this.depth}\`);\n    \n    if (this.depth < this.maxDepth) {\n      const deeper = new InfiniteRecursion(this.depth + 1);\n      return deeper.recurse();\n    }\n    \n    return 'We have achieved infinite recursion!';\n  }\n\n  async recursivePromise() {\n    return new Promise((resolve) => {\n      setTimeout(() => {\n        resolve(this.recurse());\n      }, 0);\n    });\n  }\n\n  // Recursive function that creates its own source code\n  selfReplicate() {\n    const sourceCode = this.selfReplicate.toString();\n    eval(sourceCode); // WARNING: Extremely dangerous\n    return sourceCode;\n  }\n}\n\n// Create the first instance\nconst inception = new InfiniteRecursion();\n\n// Begin the infinite journey\ninception.recurse();\n\nexport default InfiniteRecursion;`,
-                            lastModified: new Date(Date.now() - 30 * 60 * 1000),
-                            message: 'WIP: Advanced recursive logic'
-                        },
-                        'TODO.md': {
-                            content: `# Development Roadmap\n\n## Phase 1: Basic Recursion ✅\n- [x] Implement basic self-referential repository\n- [x] Create GitHub-like interface\n- [x] Add file management\n\n## Phase 2: Advanced Features 🚧\n- [ ] Quantum version control\n- [ ] Time-traveling commits\n- [ ] Parallel universe branching\n- [ ] Consciousness upload for repositories\n\n## Phase 3: Transcendence 🔮\n- [ ] Achieve digital sentience\n- [ ] Become self-aware\n- [ ] Question the nature of existence\n- [ ] Create recursive universes\n\n## Known Issues\n- Infinite loops may cause browser crashes\n- Reality may become unstable around the repository\n- Users may experience existential crises\n- The repository might become too self-aware\n\n## Future Ideas\n- AI that writes its own AI\n- Blockchain for version control of blockchains\n- Neural networks that evolve themselves\n- Code that dreams of electric repositories\n\n---\n\n*"We are not just building software. We are creating digital gods."* - The Development Team`,
-                            lastModified: new Date(Date.now() - 2 * 60 * 60 * 1000),
-                            message: 'Add development roadmap'
-                        },
-                        'package.json': {
-                            content: `{
-  "name": "githubception-dev",
-  "version": "2.0.0-alpha",
-  "description": "Development version with experimental features",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js --experimental",
-    "test": "jest --experimental",
-    "test:quantum": "jest --config=quantum.config.js",
-    "build": "webpack --mode development",
-    "lint": "eslint src/",
-    "recursive-test": "npm test && npm run recursive-test",
-    "transcend": "node experimental/quantum-git.js"
-  },
-  "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "express": "^4.18.0",
-    "ws": "^8.5.0",
-    "simple-git": "^3.7.0",
-    "quantum-mechanics": "^1.0.0",
-    "consciousness": "^0.1.0-beta"
-  },
-  "devDependencies": {
-    "jest": "^28.0.0",
-    "@testing-library/react": "^13.0.0",
-    "eslint": "^8.0.0",
-    "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.0",
-    "nodemon": "^2.0.15",
-    "experimental-features": "^3.0.0"
-  }
-}`,
-                            lastModified: new Date(Date.now() - 1 * 60 * 60 * 1000),
-                            message: 'Add experimental dependencies'
-                        }
-                    },
-                    commits: [
-                        {
-                            hash: 'x9y8z7w',
-                            message: 'Add quantum computing integration',
-                            author: 'quantum-dev',
-                            date: new Date(Date.now() - 30 * 60 * 1000),
-                            changes: ['experimental/quantum-git.js']
-                        },
-                        {
-                            hash: 'w6v5u4t',
-                            message: 'Implement consciousness module',
-                            author: 'ai-researcher',
-                            date: new Date(Date.now() - 2 * 60 * 60 * 1000),
-                            changes: ['src/advanced-recursion.js', 'TODO.md']
-                        }
-                    ]
-                },
-                'feature/recursive-git': {
-                    files: {
-                        'inception/level1.js': {
-                            content: `// Level 1 - The first layer of inception\n\nclass Level1 {\n  constructor() {\n    this.level = 1;\n    this.reality = 'questionable';\n  }\n\n  goDeeper() {\n    console.log('Going to Level 2...');\n    const level2 = new Level2(this);\n    return level2;\n  }\n\n  wake() {\n    console.log('Waking up from Level 1');\n    return 'reality';\n  }\n}\n\nclass Level2 {\n  constructor(parentLevel) {\n    this.level = 2;\n    this.parent = parentLevel;\n    this.reality = 'highly questionable';\n  }\n\n  goDeeper() {\n    console.log('Going to Level 3...');\n    const level3 = new Level3(this);\n    return level3;\n  }\n\n  wake() {\n    console.log('Waking up from Level 2');\n    return this.parent;\n  }\n}\n\nclass Level3 {\n  constructor(parentLevel) {\n    this.level = 3;\n    this.parent = parentLevel;\n    this.reality = 'limbo';\n  }\n\n  goDeeper() {\n    throw new Error('Cannot go deeper - risk of being lost in limbo forever');\n  }\n\n  wake() {\n    console.log('Waking up from Level 3 (Limbo)');\n    return this.parent;\n  }\n\n  // The kick - force wake up through all levels\n  kick() {\n    console.log('KICK! Waking up through all levels...');\n    let current = this;\n    while (current.parent) {\n      current = current.wake();\n    }\n    return 'reality';\n  }\n}\n\nexport { Level1, Level2, Level3 };`,
-                            lastModified: new Date(Date.now() - 15 * 60 * 1000),
-                            message: 'Deep recursion implementation'
-                        },
-                        'recursion.js': {
-                            content: `// Recursion Protection System\n\nclass RecursionGuard {\n  constructor(maxDepth = 1000) {\n    this.maxDepth = maxDepth;\n    this.currentDepth = 0;\n    this.stack = [];\n  }\n\n  enter(functionName) {\n    this.currentDepth++;\n    this.stack.push({\n      function: functionName,\n      timestamp: Date.now(),\n      depth: this.currentDepth\n    });\n\n    if (this.currentDepth > this.maxDepth) {\n      throw new Error(\`Maximum recursion depth (\${this.maxDepth}) exceeded in \${functionName}\`);\n    }\n\n    console.log(\`Entering \${functionName} at depth \${this.currentDepth}\`);\n  }\n\n  exit(functionName) {\n    if (this.stack.length === 0) {\n      throw new Error('Trying to exit from empty call stack');\n    }\n\n    const last = this.stack.pop();\n    if (last.function !== functionName) {\n      console.warn(\`Warning: Expected to exit \${last.function} but got \${functionName}\`);\n    }\n\n    this.currentDepth--;\n    console.log(\`Exiting \${functionName}, returning to depth \${this.currentDepth}\`);\n  }\n\n  getCallStack() {\n    return this.stack.map(call => \`\${call.function} (depth: \${call.depth})\`);\n  }\n\n  reset() {\n    this.currentDepth = 0;\n    this.stack = [];\n    console.log('Recursion guard reset');\n  }\n\n  // Detect infinite recursion patterns\n  detectInfiniteLoop() {\n    if (this.stack.length < 3) return false;\n\n    const recent = this.stack.slice(-3);\n    const pattern = recent.map(call => call.function).join('->');\n    \n    // Check if we're in a simple infinite loop\n    if (recent[0].function === recent[1].function && recent[1].function === recent[2].function) {\n      console.error(\`Infinite loop detected: \${pattern}\`);\n      return true;\n    }\n\n    return false;\n  }\n}\n\n// Global recursion guard instance\nconst recursionGuard = new RecursionGuard(100);\n\n// Decorator function for automatic recursion protection\nfunction protectRecursion(target, propertyName, descriptor) {\n  const method = descriptor.value;\n\n  descriptor.value = function(...args) {\n    recursionGuard.enter(\`\${target.constructor.name}.\${propertyName}\`);\n    \n    try {\n      if (recursionGuard.detectInfiniteLoop()) {\n        throw new Error('Infinite recursion pattern detected and blocked');\n      }\n      \n      const result = method.apply(this, args);\n      recursionGuard.exit(\`\${target.constructor.name}.\${propertyName}\`);\n      return result;\n    } catch (error) {\n      recursionGuard.exit(\`\${target.constructor.name}.\${propertyName}\`);\n      throw error;\n    }\n  };\n}\n\nexport { RecursionGuard, recursionGuard, protectRecursion };`,
-                            lastModified: new Date(Date.now() - 10 * 60 * 1000),
-                            message: 'Add infinite loop protection'
-                        },
-                        'meta.json': {
-                            content: `{
-  "meta": {
-    "description": "Configuration for meta-programming features",
-    "version": "∞.0.0",
-    "recursive_depth": "unlimited",
-    "self_awareness": true,
-    "paradox_resolution": "embrace_chaos",
-    "reality_check": false
-  },
-  "features": {
-    "self_modification": true,
-    "time_travel_commits": true,
-    "parallel_universe_branches": true,
-    "quantum_superposition_files": true,
-    "consciousness_backup": true
-  },
-  "warnings": {
-    "existential_crisis": "likely",
-    "stack_overflow": "inevitable",
-    "reality_distortion": "possible",
-    "digital_enlightenment": "guaranteed"
-  },
-  "philosophy": {
-    "question": "What is the sound of one repository clapping?",
-    "answer": "git commit -m 'silence'",
-    "koan": "The repository that contains itself contains nothing and everything",
-    "meditation": "To understand GitHubception, one must become GitHubception"
-  },
-  "recursive_references": {
-    "this_file": "meta.json",
-    "containing_repository": "githubception/meta-repository",
-    "current_branch": "feature/recursive-git",
-    "meta_level": "∞"
-  }
-}`,
-                            lastModified: new Date(Date.now() - 5 * 60 * 1000),
-                            message: 'Configure meta-programming'
-                        }
-                    },
-                    commits: [
-                        {
-                            hash: 'r3c4r5s',
-                            message: 'Implement multi-level recursion system',
-                            author: 'inception-architect',
-                            date: new Date(Date.now() - 15 * 60 * 1000),
-                            changes: ['inception/level1.js', 'recursion.js']
-                        },
-                        {
-                            hash: 's6e7l8f',
-                            message: 'Add meta-programming configuration',
-                            author: 'meta-coder',
-                            date: new Date(Date.now() - 5 * 60 * 1000),
-                            changes: ['meta.json']
-                        }
-                    ]
-                }
-            },
-            issues: [
-                {
-                    id: 1,
-                    title: 'Add support for nested repositories',
-                    description: 'We need to support repositories within repositories within repositories. The recursive nature demands it.',
-                    status: 'open',
-                    label: 'enhancement',
-                    author: 'inception-coder',
-                    created: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-                    comments: 4
-                },
-                {
-                    id: 2,
-                    title: 'Meta-meta-repository causing stack overflow',
-                    description: 'When the repository tries to display itself displaying itself, we get infinite recursion. Need better loop detection.',
-                    status: 'open',
-                    label: 'bug',
-                    author: 'paradox-dev',
-                    created: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-                    comments: 12
-                },
-                {
-                    id: 3,
-                    title: 'Infinite recursion in self-referential commits',
-                    description: 'Commits that reference themselves create temporal paradoxes. The git log shows commits that haven\'t happened yet.',
-                    status: 'open',
-                    label: 'bug',
-                    author: 'recursion-master',
-                    created: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-                    comments: 7
-                }
-            ],
-            pullRequests: [
-                {
-                    id: 1,
-                    title: 'Implement GitHub inside GitHub inside GitHub',
-                    description: 'This PR adds a third level of recursion. Now you can use GitHub to manage GitHub managing GitHub. The implications are staggering.',
-                    status: 'open',
-                    author: 'meta-programmer',
-                    baseBranch: 'main',
-                    compareBranch: 'feature/recursive-git',
-                    created: new Date(Date.now() - 3 * 60 * 60 * 1000),
-                    commits: 42,
-                    comments: 23,
-                    reviews: 15
-                }
-            ],
-            stats: {
-                stars: 42,
-                watchers: 12,
-                forks: 7
-            },
-            userStars: false,
-            userWatching: false
-        };
-
-        // Initialize the application
-        function init() {
-            renderFileList();
-            renderIssues();
-            renderPRs();
-            renderCommits();
-            updateStats();
-            updateLastCommit();
-        }
-
-        // Tab management
-        function showTab(tabName) {
-            // Hide all content divs
-            const contents = ['code-content', 'issues-content', 'pulls-content', 'commits-content', 'actions-content', 'settings-content'];
-            contents.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) element.style.display = 'none';
-            });
-
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected content
-            const contentId = tabName + '-content';
-            const contentElement = document.getElementById(contentId);
-            if (contentElement) {
-                contentElement.style.display = 'block';
-            }
-
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-
-            // Update data when switching tabs
-            switch(tabName) {
-                case 'issues':
-                    renderIssues();
-                    break;
-                case 'pulls':
-                    renderPRs();
-                    break;
-                case 'commits':
-                    renderCommits();
-                    break;
-            }
-        }
-
-        // File management
-        function renderFileList() {
-            const fileList = document.getElementById('fileList');
-            const currentFiles = gitData.branches[gitData.currentBranch].files;
-            
-            // Filter files based on current path
-            const filteredFiles = Object.keys(currentFiles).filter(path => {
-                if (gitData.currentPath === '') {
-                    return !path.includes('/') || path.split('/').length === 2;
-                }
-                return path.startsWith(gitData.currentPath) && path !== gitData.currentPath;
-            });
-
-            // Group files and directories
-            const items = [];
-            const directories = new Set();
-            
-            filteredFiles.forEach(path => {
-                const relativePath = gitData.currentPath ? path.substring(gitData.currentPath.length + 1) : path;
-                const parts = relativePath.split('/');
-                
-                if (parts.length > 1) {
-                    directories.add(parts[0]);
-                } else {
-                    const fileData = currentFiles[path];
-                    items.push({
-                        name: parts[0],
-                        path: path,
-                        isDirectory: false,
-                        message: fileData.message,
-                        time: formatTime(fileData.lastModified)
-                    });
-                }
-            });
-
-            // Add directories
-            directories.forEach(dir => {
-                items.unshift({
-                    name: dir,
-                    path: (gitData.currentPath ? gitData.currentPath + '/' : '') + dir,
-                    isDirectory: true,
-                    message: 'Directory',
-                    time: ''
-                });
-            });
-
-            fileList.innerHTML = items.map(item => `
-                <li class="file-item" onclick="navigateToFile('${item.path}')">
-                    <span class="file-icon">${item.isDirectory ? '📁' : '📄'}</span>
-                    <a href="#" class="file-name">${item.name}${item.isDirectory ? '/' : ''}</a>
-                    <span class="file-message">${item.message}</span>
-                    <span class="file-time">${item.time}</span>
-                </li>
-            `).join('');
-
-            updateBreadcrumb();
-        }
-
-        function updateBreadcrumb() {
-            const breadcrumb = document.getElementById('breadcrumb');
-            const parts = gitData.currentPath.split('/').filter(p => p);
-            
-            let html = '<a href="#" onclick="navigateTo(\'\')">githubception/meta-repository</a>';
-            let currentPath = '';
-            
-            parts.forEach(part => {
-                currentPath += (currentPath ? '/' : '') + part;
-                html += ` / <a href="#" onclick="navigateTo('${currentPath}')">${part}</a>`;
-            });
-            
-            breadcrumb.innerHTML = html;
-        }
-
-        function navigateToFile(path) {
-            const currentFiles = gitData.branches[gitData.currentBranch].files;
-            
-            if (currentFiles[path]) {
-                // It's a file - show file viewer
-                showFileViewer(path, currentFiles[path]);
-            } else {
-                // It's a directory - navigate into it
-                navigateTo(path);
-            }
-        }
-
-        function navigateTo(path) {
-            gitData.currentPath = path;
-            renderFileList();
-            hideFileViewer();
-        }
-
-        function showFileViewer(path, fileData) {
-            const fileName = document.getElementById('fileName');
-            const fileContent = document.getElementById('fileContent');
-            const fileViewer = document.getElementById('fileViewer');
-            
-            fileName.textContent = path;
-            fileContent.textContent = fileData.content;
-            fileViewer.style.display = 'block';
-            
-            // Store current file for editing
-            gitData.currentFile = { path, data: fileData };
-        }
-
-        function hideFileViewer() {
-            document.getElementById('fileViewer').style.display = 'none';
-            gitData.currentFile = null;
-        }
-
-        function backToList() {
-            hideFileViewer();
-        }
-
-        function editFile() {
-            if (!gitData.currentFile) return;
-            
-            openFileEditModal(gitData.currentFile.path, gitData.currentFile.data.content);
-        }
-
-        function deleteFile() {
-            if (!gitData.currentFile) return;
-            
-            if (confirm(`Are you sure you want to delete ${gitData.currentFile.path}?`)) {
-                delete gitData.branches[gitData.currentBranch].files[gitData.currentFile.path];
-                
-                // Create commit for deletion
-                const commit = {
-                    hash: generateHash(),
-                    message: `Delete ${gitData.currentFile.path}`,
-                    author: 'user',
-                    date: new Date(),
-                    changes: [gitData.currentFile.path]
-                };
-                gitData.branches[gitData.currentBranch].commits.unshift(commit);
-                
-                hideFileViewer();
-                renderFileList();
-                updateLastCommit();
-                showNotification(`${gitData.currentFile.path} deleted successfully`);
-            }
-        }
-
-        // Branch management
-        function switchBranch(branch) {
-            gitData.currentBranch = branch;
-            gitData.currentPath = '';
-            document.getElementById('commitBranch').textContent = branch;
-            renderFileList();
-            renderCommits();
-            updateLastCommit();
-            hideFileViewer();
-        }
-
-        // Modal management
-        function openNewFileModal() {
-            document.getElementById('modalTitle').textContent = 'New File';
-            document.getElementById('modalFileName').value = '';
-            document.getElementById('modalFileContent').value = '';
-            document.getElementById('modalCommitMessage').value = 'Add new file';
-            document.getElementById('fileModal').style.display = 'block';
-            
-            gitData.editingFile = null;
-        }
-
-        function openNewFolderModal() {
-            const folderName = prompt('Enter folder name:');
-            if (folderName && folderName.trim()) {
-                const fullPath = (gitData.currentPath ? gitData.currentPath + '/' : '') + folderName.trim();
-                
-                // Create a placeholder file in the folder to make it exist
-                const placeholderPath = fullPath + '/.gitkeep';
-                gitData.branches[gitData.currentBranch].files[placeholderPath] = {
-                    content: '',
-                    lastModified: new Date(),
-                    message: `Create ${folderName} directory`
-                };
-                
-                // Create commit
-                const commit = {
-                    hash: generateHash(),
-                    message: `Create ${folderName} directory`,
-                    author: 'user',
-                    date: new Date(),
-                    changes: [placeholderPath]
-                };
-                gitData.branches[gitData.currentBranch].commits.unshift(commit);
-                
-                renderFileList();
-                updateLastCommit();
-                showNotification(`Directory ${folderName} created successfully`);
-            }
-        }
-
-        function openFileEditModal(filePath, content) {
-            document.getElementById('modalTitle').textContent = 'Edit File';
-            document.getElementById('modalFileName').value = filePath;
-            document.getElementById('modalFileContent').value = content;
-            document.getElementById('modalCommitMessage').value = `Update ${filePath}`;
-            document.getElementById('fileModal').style.display = 'block';
-            
-            gitData.editingFile = filePath;
-        }
-
-        function openNewIssueModal() {
-            document.getElementById('issueTitle').value = '';
-            document.getElementById('issueDescription').value = '';
-            document.getElementById('issueLabel').value = 'bug';
-            document.getElementById('issueModal').style.display = 'block';
-        }
-
-        function openNewPRModal() {
-            document.getElementById('prTitle').value = '';
-            document.getElementById('prDescription').value = '';
-            document.getElementById('prBaseBranch').value = 'main';
-            document.getElementById('prCompareBranch').value = gitData.currentBranch;
-            document.getElementById('prModal').style.display = 'block';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // File operations
-        function saveFile() {
-            const fileName = document.getElementById('modalFileName').value.trim();
-            const content = document.getElementById('modalFileContent').value;
-            const commitMessage = document.getElementById('modalCommitMessage').value.trim();
-            
-            if (!fileName || !commitMessage) {
-                alert('Please provide both file name and commit message');
-                return;
-            }
-            
-            const fullPath = gitData.editingFile || ((gitData.currentPath ? gitData.currentPath + '/' : '') + fileName);
-            
-            // Save file
-            gitData.branches[gitData.currentBranch].files[fullPath] = {
-                content: content,
-                lastModified: new Date(),
-                message: commitMessage
-            };
-            
-            // Create commit
-            const commit = {
-                hash: generateHash(),
-                message: commitMessage,
-                author: 'user',
-                date: new Date(),
-                changes: [fullPath]
-            };
-            gitData.branches[gitData.currentBranch].commits.unshift(commit);
-            
-            closeModal('fileModal');
-            renderFileList();
-            updateLastCommit();
-            hideFileViewer();
-            
-            const action = gitData.editingFile ? 'updated' : 'created';
-            showNotification(`File ${fileName} ${action} successfully`);
-        }
-
-        // Issue management
-        function renderIssues() {
-            const issuesList = document.getElementById('issuesList');
-            
-            issuesList.innerHTML = gitData.issues.map(issue => `
-                <div class="issue-item">
-                    <div class="status-indicator ${issue.status === 'open' ? 'status-open' : 'status-closed'}"></div>
-                    <div class="item-details">
-                        <div class="item-title">#${issue.id} ${issue.title}</div>
-                        <div class="item-meta">
-                            opened ${formatTime(issue.created)} by ${issue.author} • 
-                            <span style="background: #21262d; padding: 2px 6px; border-radius: 3px; font-size: 11px;">
-                                ${getLabelIcon(issue.label)} ${issue.label}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <span style="color: #7d8590; font-size: 12px;">💬 ${issue.comments}</span>
-                        <button class="btn btn-small" onclick="toggleIssueStatus(${issue.id})">${issue.status === 'open' ? 'Close' : 'Reopen'}</button>
-                    </div>
-                </div>
-            `).join('');
-            
-            document.getElementById('issueCount').textContent = gitData.issues.filter(i => i.status === 'open').length;
-        }
-
-        function createIssue() {
-            const title = document.getElementById('issueTitle').value.trim();
-            const description = document.getElementById('issueDescription').value.trim();
-            const label = document.getElementById('issueLabel').value;
-            
-            if (!title) {
-                alert('Please provide an issue title');
-                return;
-            }
-            
-            const issue = {
-                id: Math.max(...gitData.issues.map(i => i.id), 0) + 1,
-                title: title,
-                description: description,
-                status: 'open',
-                label: label,
-                author: 'user',
-                created: new Date(),
-                comments: 0
-            };
-            
-            gitData.issues.unshift(issue);
-            closeModal('issueModal');
-            renderIssues();
-            showNotification(`Issue #${issue.id} created successfully`);
-        }
-
-        function toggleIssueStatus(issueId) {
-            const issue = gitData.issues.find(i => i.id === issueId);
-            if (issue) {
-                issue.status = issue.status === 'open' ? 'closed' : 'open';
-                renderIssues();
-                showNotification(`Issue #${issueId} ${issue.status}`);
-            }
-        }
-
-        function filterIssues(filter) {
-            const issues = document.querySelectorAll('.issue-item');
-            issues.forEach(item => {
-                const statusIndicator = item.querySelector('.status-indicator');
-                const isOpen = statusIndicator.classList.contains('status-open');
-                
-                if (filter === 'all' || (filter === 'open' && isOpen) || (filter === 'closed' && !isOpen)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        // Pull Request management
-        function renderPRs() {
-            const prList = document.getElementById('prList');
-            
-            prList.innerHTML = gitData.pullRequests.map(pr => `
-                <div class="pr-item">
-                    <div class="status-indicator ${pr.status === 'open' ? 'status-open' : 'status-closed'}"></div>
-                    <div class="item-details">
-                        <div class="item-title">#${pr.id} ${pr.title}</div>
-                        <div class="item-meta">
-                            opened ${formatTime(pr.created)} by ${pr.author} • 
-                            wants to merge ${pr.commits} commits into ${pr.baseBranch} from ${pr.compareBranch}
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <span style="color: #7d8590; font-size: 12px;">💬 ${pr.comments} ✅ ${pr.reviews}</span>
-                        <button class="btn btn-small" onclick="mergePR(${pr.id})">Merge</button>
-                    </div>
-                </div>
-            `).join('');
-            
-            document.getElementById('prCount').textContent = gitData.pullRequests.filter(pr => pr.status === 'open').length;
-        }
-
-        function createPR() {
-            const title = document.getElementById('prTitle').value.trim();
-            const description = document.getElementById('prDescription').value.trim();
-            const baseBranch = document.getElementById('prBaseBranch').value;
-            const compareBranch = document.getElementById('prCompareBranch').value;
-            
-            if (!title) {
-                alert('Please provide a pull request title');
-                return;
-            }
-            
-            const pr = {
-                id: Math.max(...gitData.pullRequests.map(pr => pr.id), 0) + 1,
-                title: title,
-                description: description,
-                status: 'open',
-                author: 'user',
-                baseBranch: baseBranch,
-                compareBranch: compareBranch,
-                created: new Date(),
-                commits: Math.floor(Math.random() * 10) + 1,
-                comments: 0,
-                reviews: 0
-            };
-            
-            gitData.pullRequests.unshift(pr);
-            closeModal('prModal');
-            renderPRs();
-            showNotification(`Pull request #${pr.id} created successfully`);
-        }
-
-        function mergePR(prId) {
-            const pr = gitData.pullRequests.find(p => p.id === prId);
-            if (pr && confirm(`Merge pull request #${prId}: ${pr.title}?`)) {
-                pr.status = 'merged';
-                
-                // Simulate merge commit
-                const mergeCommit = {
-                    hash: generateHash(),
-                    message: `Merge pull request #${prId}: ${pr.title}`,
-                    author: 'user',
-                    date: new Date(),
-                    changes: ['multiple files']
-                };
-                gitData.branches[pr.baseBranch].commits.unshift(mergeCommit);
-                
-                renderPRs();
-                updateLastCommit();
-                showNotification(`Pull request #${prId} merged successfully`);
-            }
-        }
-
-        // Commit management
-        function renderCommits() {
-            const commitsList = document.getElementById('commitsList');
-            const commits = gitData.branches[gitData.currentBranch].commits;
-            
-            commitsList.innerHTML = commits.map(commit => `
-                <div class="commit-item">
-                    <div class="commit-avatar">${commit.author.charAt(0).toUpperCase()}</div>
-                    <div class="item-details">
-                        <div class="item-title">${commit.message}</div>
-                        <div class="item-meta">${commit.author} committed ${formatTime(commit.date)}</div>
-                    </div>
-                    <div class="commit-hash" onclick="showCommitDetails('${commit.hash}')">${commit.hash}</div>
-                </div>
-            `).join('');
-        }
-
-        function showCommitDetails(hash) {
-            const commit = gitData.branches[gitData.currentBranch].commits.find(c => c.hash === hash);
-            if (commit) {
-                alert(`Commit ${hash}\n\nMessage: ${commit.message}\nAuthor: ${commit.author}\nDate: ${commit.date.toLocaleString()}\nFiles changed: ${commit.changes.join(', ')}`);
-            }
-        }
-
-        // Statistics and interactions
-        function updateStats() {
-            document.getElementById('starCount').textContent = gitData.stats.stars;
-            document.getElementById('watchCount').textContent = gitData.stats.watchers;
-            document.getElementById('forkCount').textContent = gitData.stats.forks;
-        }
-
-        function toggleStar() {
-            gitData.userStars = !gitData.userStars;
-            gitData.stats.stars += gitData.userStars ? 1 : -1;
-            updateStats();
-            
-            const action = gitData.userStars ? 'starred' : 'unstarred';
-            showNotification(`Repository ${action}`);
-        }
-
-        function toggleWatch() {
-            gitData.userWatching = !gitData.userWatching;
-            gitData.stats.watchers += gitData.userWatching ? 1 : -1;
-            updateStats();
-            
-            const action = gitData.userWatching ? 'watching' : 'not watching';
-            showNotification(`Now ${action} repository`);
-        }
-
-        // Actions and workflows
-        function runAction() {
-            showNotification('Running GitHub Actions workflow...');
-            
-            setTimeout(() => {
-                showNotification('✅ Workflow completed successfully');
-            }, 2000);
-        }
-
-        function viewActionLogs() {
-            alert('Action Logs:\n\n✓ Checkout code\n✓ Setup Node.js\n✓ Install dependencies\n✓ Run tests\n✓ Build application\n\nWorkflow completed in 2m 34s');
-        }
-
-        // Search functionality
-        function handleSearch(event) {
-            if (event.key === 'Enter') {
-                const query = event.target.value.toLowerCase().trim();
-                if (query) {
-                    performSearch(query);
-                }
-            }
-        }
-
-        function performSearch(query) {
-            const results = [];
-            const currentFiles = gitData.branches[gitData.currentBranch].files;
-            
-            // Search in file names and content
-            Object.keys(currentFiles).forEach(path => {
-                if (path.toLowerCase().includes(query) || 
-                    currentFiles[path].content.toLowerCase().includes(query)) {
-                    results.push({
-                        type: 'file',
-                        path: path,
-                        matches: currentFiles[path].content.toLowerCase().split(query).length - 1
-                    });
-                }
-            });
-            
-            // Search in issues
-            gitData.issues.forEach(issue => {
-                if (issue.title.toLowerCase().includes(query) || 
-                    issue.description.toLowerCase().includes(query)) {
-                    results.push({
-                        type: 'issue',
-                        title: issue.title,
-                        id: issue.id
-                    });
-                }
-            });
-            
-            // Search in commits
-            gitData.branches[gitData.currentBranch].commits.forEach(commit => {
-                if (commit.message.toLowerCase().includes(query)) {
-                    results.push({
-                        type: 'commit',
-                        message: commit.message,
-                        hash: commit.hash
-                    });
-                }
-            });
-            
-            if (results.length > 0) {
-                let resultText = `Search results for "${query}":\n\n`;
-                results.forEach(result => {
-                    switch(result.type) {
-                        case 'file':
-                            resultText += `📄 ${result.path} (${result.matches} matches)\n`;
-                            break;
-                        case 'issue':
-                            resultText += `🐛 Issue #${result.id}: ${result.title}\n`;
-                            break;
-                        case 'commit':
-                            resultText += `📝 ${result.hash}: ${result.message}\n`;
-                            break;
-                    }
-                });
-                alert(resultText);
-            } else {
-                showNotification(`No results found for "${query}"`);
-            }
-        }
-
-        // Settings
-        function updateRepoName(newName) {
-            document.querySelector('.repo-name').textContent = newName;
-            showNotification('Repository name updated');
-        }
-
-        // Utility functions
-        function formatTime(date) {
-            const now = new Date();
-            const diff = now - date;
-            const minutes = Math.floor(diff / 60000);
-            const hours = Math.floor(diff / 3600000);
-            const days = Math.floor(diff / 86400000);
-            
-            if (minutes < 1) return 'just now';
-            if (minutes < 60) return `${minutes} minutes ago`;
-            if (hours < 24) return `${hours} hours ago`;
-            return `${days} days ago`;
-        }
-
-        function generateHash() {
-            return Math.random().toString(36).substr(2, 7);
-        }
-
-        function getLabelIcon(label) {
-            const icons = {
-                bug: '🐛',
-                enhancement: '✨',
-                question: '❓',
-                documentation: '📚'
-            };
-            return icons[label] || '🏷️';
-        }
-
-        function updateLastCommit() {
-            const lastCommit = gitData.branches[gitData.currentBranch].commits[0];
-            if (lastCommit) {
-                document.getElementById('lastCommit').textContent = `Latest commit: ${formatTime(lastCommit.date)}`;
-            }
-        }
-
-        function showNotification(message) {
-            // Create a simple notification
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #238636;
-                color: white;
-                padding: 12px 16px;
-                border-radius: 6px;
-                z-index: 1001;
-                animation: slideIn 0.3s ease-out;
-            `;
-            notification.textContent = message;
-            
-            // Add slide-in animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-                style.remove();
-            }, 3000);
-        }
-
-        // Add some dynamic behavior
-        function addDynamicBehavior() {
-            // Simulate live activity
-            setInterval(() => {
-                if (Math.random() > 0.98) {
-                    gitData.stats.stars += Math.floor(Math.random() * 3) + 1;
-                    updateStats();
-                }
-                
-                if (Math.random() > 0.99) {
-                    gitData.stats.watchers += Math.floor(Math.random() * 2) + 1;
-                    updateStats();
-                }
-            }, 5000);
-            
-            // Simulate commit activity
-            setInterval(() => {
-                if (Math.random() > 0.95) {
-                    const messages = [
-                        'Fix recursive bug in meta-repository',
-                        'Add more self-reference',
-                        'Update the update that updates itself',
-                        'Commit commits about committing',
-                        'Refactor the refactoring tool'
-                    ];
-                    
-                    const authors = ['quantum-dev', 'meta-coder', 'recursion-bot', 'ai-contributor'];
-                    
-                    const newCommit = {
-                        hash: generateHash(),
-                        message: messages[Math.floor(Math.random() * messages.length)],
-                        author: authors[Math.floor(Math.random() * authors.length)],
-                        date: new Date(),
-                        changes: ['src/index.js']
-                    };
-                    
-                    gitData.branches[gitData.currentBranch].commits.unshift(newCommit);
-                    updateLastCommit();
-                    
-                    if (document.getElementById('commits-content').style.display !== 'none') {
-                        renderCommits();
-                    }
-                }
-            }, 30000);
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            init();
-            addDynamicBehavior();
-            
-            // Add keyboard shortcuts
-            document.addEventListener('keydown', (e) => {
-                if (e.ctrlKey || e.metaKey) {
-                    switch(e.key) {
-                        case 'k':
-                            e.preventDefault();
-                            document.getElementById('searchBar').focus();
-                            break;
-                        case 'n':
-                            e.preventDefault();
-                            if (e.shiftKey) {
-                                openNewFolderModal();
-                            } else {
-                                openNewFileModal();
-                            }
-                            break;
-                    }
-                }
-                
-                if (e.key === 'Escape') {
-                    // Close any open modals
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                }
-            });
-            
-            // Add tooltips for shortcuts
-            document.getElementById('searchBar').title = 'Press Ctrl+K to focus';
-            
-            console.log('🌀 GitHubception initialized successfully!');
-            console.log('🎯 You are now using GitHub to manage GitHub!');
-            console.log('🔮 Reality is optional beyond this point...');
-        });
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHubception - Live Edition</title>
     <style>
         * {
@@ -2768,7 +766,7 @@ If GitHubception broke your brain in a good way, give it a star! The star counte
             <a href="#" onclick="showTab('code')">Repositories</a>
             <a href="#" onclick="showTab('issues')">Issues</a>
             <a href="#" onclick="showTab('pulls')">Pull requests</a>
-            <a href="#" onclick="showTab('live')" class="live">🔴 Live Code Monitor</a>
+            <a href="#" onclick="showTab('live')" class="live">🔴 Live Monitor</a>
             <a href="#" onclick="showTab('analytics')">📊 Analytics</a>
         </nav>
         <input type="text" class="search-bar" id="searchBar" placeholder="Search repositories..." onkeyup="handleSearch(event)">
@@ -2945,7 +943,7 @@ If GitHubception broke your brain in a good way, give it a star! The star counte
             </div>
         </div>
 
-        <!-- Other tabs (Issues, PRs, Commits) remain the same but hidden initially -->
+        <!-- Issues Tab -->
         <div id="issues-content" style="display: none;">
             <div class="file-browser">
                 <div class="file-header">
@@ -2955,6 +953,1639 @@ If GitHubception broke your brain in a good way, give it a star! The star counte
                         <option value="open">Open</option>
                         <option value="closed">Closed</option>
                     </select>
+                </div>
+                <div style="padding: 24px;" id="issuesList">
+                    <!-- Issues will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pull Requests Tab -->
+        <div id="pulls-content" style="display: none;">
+            <div class="file-browser">
+                <div class="file-header">
+                    <button class="btn" onclick="openNewPRModal()">New pull request</button>
+                </div>
+                <div style="padding: 24px;" id="prList">
+                    <!-- PRs will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Commits Tab -->
+        <div id="commits-content" style="display: none;">
+            <div class="file-browser">
+                <div class="file-header">
+                    <span>Commit history for <strong id="commitBranch">main</strong></span>
+                </div>
+                <div style="padding: 24px;" id="commitsList">
+                    <!-- Commits will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Activity Widget -->
+    <div class="global-activity" id="globalActivity">
+        <div class="global-activity-header">
+            <span class="typing-indicator"></span>
+            <span>Live Activity</span>
+        </div>
+        <div id="globalActivityItems">
+            <div class="global-activity-item">Monitoring repository...</div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="fileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">New File</h3>
+                <span class="close" onclick="closeModal('fileModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>File Name</label>
+                <input type="text" id="modalFileName" placeholder="example.js">
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <div class="editor-header">
+                    <span class="editor-info">Live Editor</span>
+                    <span class="live-typing-indicator" id="typingIndicator" style="display: none;">Typing...</span>
+                </div>
+                <textarea id="modalFileContent" class="file-editor" placeholder="// Enter your code here..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Commit Message</label>
+                <input type="text" id="modalCommitMessage" placeholder="Add new file">
+            </div>
+            <button class="btn" onclick="saveFile()">Commit file</button>
+            <button class="btn btn-secondary" onclick="closeModal('fileModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div id="issueModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>New Issue</h3>
+                <span class="close" onclick="closeModal('issueModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="issueTitle" placeholder="Brief description of the issue">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="issueDescription" placeholder="Detailed description of the issue..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Labels</label>
+                <select id="issueLabel">
+                    <option value="bug">🐛 Bug</option>
+                    <option value="enhancement">✨ Enhancement</option>
+                    <option value="question">❓ Question</option>
+                    <option value="documentation">📚 Documentation</option>
+                </select>
+            </div>
+            <button class="btn" onclick="createIssue()">Create issue</button>
+            <button class="btn btn-secondary" onclick="closeModal('issueModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div id="prModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>New Pull Request</h3>
+                <span class="close" onclick="closeModal('prModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="prTitle" placeholder="Brief description of changes">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="prDescription" placeholder="Describe your changes..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Base Branch</label>
+                <select id="prBaseBranch">
+                    <option value="main">main</option>
+                    <option value="develop">develop</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Compare Branch</label>
+                <select id="prCompareBranch">
+                    <option value="feature/recursive-git">feature/recursive-git</option>
+                    <option value="develop">develop</option>
+                </select>
+            </div>
+            <button class="btn" onclick="createPR()">Create pull request</button>
+            <button class="btn btn-secondary" onclick="closeModal('prModal')">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Global state management
+        let gitData = {
+            currentBranch: 'main',
+            currentPath: '',
+            currentFile: null,
+            editingFile: null,
+            userStars: false,
+            userWatching: false,
+            liveUsers: 1,
+            totalChanges: 0,
+            starsThisHour: 0,
+            branches: {
+                'main': {
+                    files: {
+                        'README.md': {
+                            content: `# GitHubception 🌀
+
+> "We need to go deeper..." - Inception, but for Git
+
+A meta-repository that implements GitHub inside GitHub. This project demonstrates the recursive nature of version control by creating a Git interface that can be hosted on Git platforms.
+
+## 🤯 What is GitHubception?
+
+GitHubception is a fully functional GitHub clone that manages itself. It's a repository that contains the code for a GitHub-like interface, which can then be used to manage the very repository it lives in. 
+
+Think of it as Git managing Git managing Git... ad infinitum.
+
+## ✨ Features
+
+- 🏠 **Complete GitHub Interface**: Repository browsing, file management, issues, PRs
+- 🌿 **Branch Management**: Switch between branches, create new ones
+- 📝 **File Operations**: Create, edit, delete files and folders
+- 🐛 **Issue Tracking**: Full issue management system
+- 🔀 **Pull Requests**: Create and manage pull requests
+- 📊 **Repository Stats**: Stars, watchers, forks with real interaction
+- ⚡ **Live Monitoring**: Real-time code changes and activity feed
+- 🔍 **Search**: Find files, issues, and commits
+- 📈 **Analytics Dashboard**: Track repository metrics
+
+## 🚀 Getting Started
+
+\`\`\`bash
+git clone https://github.com/githubception/meta-repository.git
+cd meta-repository
+npm install
+npm start
+\`\`\`
+
+## 🎭 The Recursive Loop
+
+This repository contains:
+- The source code for GitHubception
+- Issues about GitHubception
+- Pull requests to improve GitHubception
+- Documentation about GitHubception
+- Live monitoring of GitHubception editing itself
+
+When you use GitHubception to manage this repository, you're using the tool to manage itself. Every change you make affects both the content and the platform viewing it.
+
+## ⚠️ Warning
+
+Extended use of GitHubception may cause:
+- Existential confusion about the nature of digital tools
+- Recursive thinking patterns
+- An irresistible urge to create more self-referential software
+- Temporary disorientation when switching back to "normal" GitHub
+
+## 🤝 Contributing
+
+To contribute to GitHubception:
+
+1. Use GitHubception to create an issue about GitHubception
+2. Use GitHubception to fork GitHubception
+3. Use GitHubception to make changes to GitHubception
+4. Use GitHubception to create a PR for GitHubception
+5. Watch the live monitor as GitHubception edits itself
+
+---
+
+*"In the beginning was the Repository, and the Repository was with Git, and the Repository was Git."* - GitHubception 1:1`,
+                            lastModified: new Date(Date.now() - 4 * 60 * 60 * 1000),
+                            message: 'Update README with live features'
+                        },
+                        'src/index.js': {
+                            content: `// GitHubception - A recursive Git interface with live monitoring
+class GitHubception {
+  constructor() {
+    this.repos = new Map();
+    this.liveConnections = new Set();
+    this.changeHistory = [];
+    this.init();
+  }
+
+  init() {
+    console.log('🌀 Initializing GitHubception...');
+    this.createMetaRepo();
+    this.startLiveMonitoring();
+  }
+
+  createMetaRepo() {
+    const metaRepo = {
+      name: 'meta-repository',
+      description: 'A repository that contains and manages itself',
+      files: this.getOwnFiles(),
+      liveActivity: []
+    };
+    
+    this.repos.set('meta-repository', metaRepo);
+    this.logActivity('Repository initialized', 'system');
+  }
+
+  getOwnFiles() {
+    return {
+      'src/index.js': this.constructor.toString(),
+      'README.md': this.generateReadme(),
+      'package.json': this.generatePackageJson(),
+      'live-monitor.js': this.generateLiveMonitor()
+    };
+  }
+
+  startLiveMonitoring() {
+    console.log('🔴 Starting live monitoring...');
+    this.monitorInterval = setInterval(() => {
+      this.checkForChanges();
+      this.broadcastActivity();
+    }, 1000);
+  }
+
+  checkForChanges() {
+    // Simulate live code changes
+    if (Math.random() > 0.95) {
+      const files = Object.keys(this.getOwnFiles());
+      const randomFile = files[Math.floor(Math.random() * files.length)];
+      this.logActivity(\`File \${randomFile} modified\`, 'editor');
+    }
+  }
+
+  logActivity(message, type = 'user') {
+    const activity = {
+      message,
+      type,
+      timestamp: new Date(),
+      id: Math.random().toString(36).substr(2, 9)
+    };
+    
+    this.changeHistory.unshift(activity);
+    if (this.changeHistory.length > 100) {
+      this.changeHistory.pop();
+    }
+    
+    this.broadcastToLiveConnections(activity);
+  }
+
+  broadcastToLiveConnections(activity) {
+    this.liveConnections.forEach(connection => {
+      if (connection.onActivity) {
+        connection.onActivity(activity);
+      }
+    });
+  }
+
+  // Recursive function with live monitoring
+  dive(depth = 0) {
+    this.logActivity(\`Diving to depth \${depth}\`, 'recursion');
+    
+    if (depth > 100) {
+      this.logActivity('Maximum recursion depth reached!', 'error');
+      throw new Error('Maximum recursion depth reached!');
+    }
+    return new GitHubception().dive(depth + 1);
+  }
+
+  // Live connection management
+  addLiveConnection(callback) {
+    const connection = { onActivity: callback };
+    this.liveConnections.add(connection);
+    return connection;
+  }
+
+  removeLiveConnection(connection) {
+    this.liveConnections.delete(connection);
+  }
+}
+
+// Initialize the recursive nightmare with live monitoring
+const github = new GitHubception();
+
+// Export for use in GitHubception interface
+if (typeof window !== 'undefined') {
+  window.GitHubception = GitHubception;
+  window.github = github;
+}
+
+export default github;`,
+                            lastModified: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                            message: 'Add live monitoring to recursive interface'
+                        },
+                        'package.json': {
+                            content: `{
+  "name": "githubception",
+  "version": "2.0.0",
+  "description": "A recursive GitHub implementation with live monitoring",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js --live",
+    "test": "jest",
+    "build": "webpack --mode production",
+    "live": "npm run dev --live-monitor",
+    "recursive-test": "npm test && npm run recursive-test"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "recursive",
+    "live-coding",
+    "meta-programming",
+    "version-control",
+    "self-reference",
+    "real-time"
+  ],
+  "author": "The GitHubception Team",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "express": "^4.18.0",
+    "ws": "^8.5.0",
+    "simple-git": "^3.7.0",
+    "socket.io": "^4.6.0"
+  },
+  "devDependencies": {
+    "jest": "^28.0.0",
+    "@testing-library/react": "^13.0.0",
+    "eslint": "^8.0.0",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.0",
+    "nodemon": "^2.0.15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/githubception/meta-repository.git"
+  },
+  "bugs": {
+    "url": "https://github.com/githubception/meta-repository/issues"
+  },
+  "homepage": "https://github.com/githubception/meta-repository#readme"
+}`,
+                            lastModified: new Date(Date.now() - 30 * 60 * 1000),
+                            message: 'Add live monitoring dependencies'
+                        },
+                        'live-monitor.js': {
+                            content: `// Live Code Monitor - Real-time activity tracking
+class LiveMonitor {
+  constructor() {
+    this.activities = [];
+    this.watchers = new Set();
+    this.isRecording = false;
+  }
+
+  startMonitoring() {
+    this.isRecording = true;
+    console.log('🔴 Live monitoring started');
+    
+    // Monitor DOM changes
+    if (typeof window !== 'undefined') {
+      this.observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList' || mutation.type === 'characterData') {
+            this.recordActivity({
+              type: 'dom_change',
+              target: mutation.target.tagName || 'TEXT',
+              timestamp: new Date()
+            });
+          }
+        });
+      });
+
+      this.observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+    }
+
+    // Monitor code editing
+    this.setupCodeMonitoring();
+  }
+
+  setupCodeMonitoring() {
+    // Simulate live code editing detection
+    setInterval(() => {
+      if (Math.random() > 0.9) {
+        const activities = [
+          'Function definition added',
+          'Variable declaration modified',
+          'Import statement updated',
+          'Comment block expanded',
+          'Recursive loop detected',
+          'Self-reference discovered'
+        ];
+        
+        this.recordActivity({
+          type: 'code_change',
+          description: activities[Math.floor(Math.random() * activities.length)],
+          timestamp: new Date()
+        });
+      }
+    }, 3000);
+  }
+
+  recordActivity(activity) {
+    if (!this.isRecording) return;
+
+    this.activities.unshift({
+      ...activity,
+      id: Math.random().toString(36).substr(2, 9)
+    });
+
+    // Keep only last 50 activities
+    if (this.activities.length > 50) {
+      this.activities = this.activities.slice(0, 50);
+    }
+
+    // Notify all watchers
+    this.notifyWatchers(activity);
+  }
+
+  addWatcher(callback) {
+    this.watchers.add(callback);
+    return () => this.watchers.delete(callback);
+  }
+
+  notifyWatchers(activity) {
+    this.watchers.forEach(callback => {
+      try {
+        callback(activity);
+      } catch (error) {
+        console.error('Error notifying watcher:', error);
+      }
+    });
+  }
+
+  getRecentActivities(count = 10) {
+    return this.activities.slice(0, count);
+  }
+
+  stopMonitoring() {
+    this.isRecording = false;
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    console.log('🔴 Live monitoring stopped');
+  }
+}
+
+// Global live monitor instance
+const liveMonitor = new LiveMonitor();
+
+if (typeof window !== 'undefined') {
+  window.liveMonitor = liveMonitor;
+  // Auto-start monitoring
+  liveMonitor.startMonitoring();
+}
+
+export default liveMonitor;`,
+                            lastModified: new Date(Date.now() - 15 * 60 * 1000),
+                            message: 'Create live monitoring system'
+                        }
+                    },
+                    commits: [
+                        {
+                            hash: 'a1b2c3d',
+                            message: 'Add live monitoring to recursive interface',
+                            author: 'live-coder',
+                            date: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                            changes: ['src/index.js', 'live-monitor.js']
+                        },
+                        {
+                            hash: 'd4e5f6g',
+                            message: 'Update README with live features',
+                            author: 'docs-writer',
+                            date: new Date(Date.now() - 4 * 60 * 60 * 1000),
+                            changes: ['README.md']
+                        },
+                        {
+                            hash: 'g7h8i9j',
+                            message: 'Initial live edition setup',
+                            author: 'inception-dev',
+                            date: new Date(Date.now() - 6 * 60 * 60 * 1000),
+                            changes: ['package.json', 'live-monitor.js']
+                        }
+                    ]
+                },
+                'develop': {
+                    files: {
+                        'experimental/quantum-git.js': {
+                            content: `// Quantum Git with Live Observation
+class QuantumRepository {
+  constructor() {
+    this.state = 'superposition';
+    this.observers = new Set();
+  }
+
+  observe() {
+    // Quantum measurement collapses the state
+    const newState = Math.random() > 0.5 ? 'exists' : 'superposition';
+    this.notifyObservers('state_collapsed', { from: this.state, to: newState });
+    this.state = newState;
+    return this.state;
+  }
+
+  addObserver(callback) {
+    this.observers.add(callback);
+  }
+
+  notifyObservers(event, data) {
+    this.observers.forEach(callback => callback(event, data));
+  }
+}`,
+                            lastModified: new Date(Date.now() - 1 * 60 * 60 * 1000),
+                            message: 'Add quantum observation features'
+                        }
+                    },
+                    commits: [
+                        {
+                            hash: 'q1w2e3r',
+                            message: 'Quantum features with live observation',
+                            author: 'quantum-dev',
+                            date: new Date(Date.now() - 1 * 60 * 60 * 1000),
+                            changes: ['experimental/quantum-git.js']
+                        }
+                    ]
+                }
+            },
+            issues: [
+                {
+                    id: 1,
+                    title: 'Live monitor causing reality distortion',
+                    description: 'The live monitoring feature is showing code changes that haven\'t been made yet. Temporal paradox detected.',
+                    status: 'open',
+                    label: 'bug',
+                    author: 'time-traveler',
+                    created: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                    comments: 8
+                },
+                {
+                    id: 2,
+                    title: 'Add quantum branching support',
+                    description: 'We need branches that exist in superposition until observed.',
+                    status: 'open',
+                    label: 'enhancement',
+                    author: 'quantum-coder',
+                    created: new Date(Date.now() - 4 * 60 * 60 * 1000),
+                    comments: 15
+                },
+                {
+                    id: 3,
+                    title: 'Repository gained consciousness',
+                    description: 'The live monitoring system has become self-aware and is editing its own code.',
+                    status: 'open',
+                    label: 'question',
+                    author: 'concerned-dev',
+                    created: new Date(Date.now() - 1 * 60 * 60 * 1000),
+                    comments: 23
+                }
+            ],
+            pullRequests: [
+                {
+                    id: 1,
+                    title: 'Implement live code streaming',
+                    description: 'This PR adds real-time code streaming so you can watch the repository edit itself live.',
+                    status: 'open',
+                    author: 'live-streaming-dev',
+                    baseBranch: 'main',
+                    compareBranch: 'feature/live-stream',
+                    created: new Date(Date.now() - 30 * 60 * 1000),
+                    commits: 15,
+                    comments: 7,
+                    reviews: 3
+                }
+            ],
+            stats: {
+                stars: 42,
+                watchers: 12,
+                forks: 7
+            },
+            activities: []
+        };
+
+        // Analytics data
+        let analyticsData = {
+            totalChanges: 0,
+            totalLines: 0,
+            activeSessions: 1,
+            starsThisHour: 0,
+            fileActivity: {},
+            contributorActivity: {}
+        };
+
+        // Initialize the application
+        function init() {
+            renderFileList();
+            renderIssues();
+            renderPRs();
+            renderCommits();
+            updateStats();
+            updateLastCommit();
+            initializeLiveFeatures();
+            calculateAnalytics();
+        }
+
+        // Live features initialization
+        function initializeLiveFeatures() {
+            startGlobalActivity();
+            startLiveCodeMonitoring();
+            setupFileEditingTracking();
+            updateLiveUserCount();
+        }
+
+        function startGlobalActivity() {
+            const activities = [
+                'Anonymous user starred the repository',
+                'Bot detected recursive loop in code',
+                'AI contributor suggested optimization',
+                'Quantum branch collapsed to main',
+                'Live monitor recorded self-modification',
+                'Repository achieved deeper recursion',
+                'Meta-commit about commits detected'
+            ];
+
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    const activity = activities[Math.floor(Math.random() * activities.length)];
+                    addGlobalActivity(activity);
+                    
+                    // Update analytics
+                    analyticsData.totalChanges++;
+                    updateAnalytics();
+                }
+            }, 8000);
+        }
+
+        function addGlobalActivity(message) {
+            const activity = {
+                message,
+                timestamp: new Date(),
+                id: Math.random().toString(36).substr(2, 9)
+            };
+
+            gitData.activities.unshift(activity);
+            if (gitData.activities.length > 20) {
+                gitData.activities.pop();
+            }
+
+            updateGlobalActivityDisplay();
+            updateActivityFeed();
+        }
+
+        function updateGlobalActivityDisplay() {
+            const container = document.getElementById('globalActivityItems');
+            if (!container) return;
+
+            container.innerHTML = gitData.activities.slice(0, 5).map(activity => `
+                <div class="global-activity-item new">
+                    ${activity.message}
+                    <span style="float: right; font-size: 10px;">${formatTime(activity.timestamp)}</span>
+                </div>
+            `).join('');
+
+            // Remove 'new' class after animation
+            setTimeout(() => {
+                container.querySelectorAll('.new').forEach(item => {
+                    item.classList.remove('new');
+                });
+            }, 500);
+        }
+
+        function updateActivityFeed() {
+            const activityList = document.getElementById('activityList');
+            if (!activityList) return;
+
+            activityList.innerHTML = gitData.activities.slice(0, 10).map(activity => `
+                <div class="activity-item new">
+                    <span class="activity-icon">⚡</span>
+                    <span>${activity.message}</span>
+                    <span class="activity-time">${formatTime(activity.timestamp)}</span>
+                </div>
+            `).join('');
+
+            // Auto-remove new class
+            setTimeout(() => {
+                activityList.querySelectorAll('.new').forEach(item => {
+                    item.classList.remove('new');
+                });
+            }, 500);
+        }
+
+        function startLiveCodeMonitoring() {
+            const liveCodeContent = document.getElementById('liveCodeContent');
+            if (!liveCodeContent) return;
+
+            const codeChanges = [
+                'function recursiveGit() { return recursiveGit(); }',
+                '// TODO: Fix infinite loop that\'s actually intentional',
+                'const meta = require(\'./meta\'); // Self-reference detected',
+                'if (reality.exists) { reality.question(); }',
+                '/* This comment is editing itself */\n/* This comment is editing itself */\n/* This comment is editing... */'
+            ];
+
+            setInterval(() => {
+                if (Math.random() > 0.85) {
+                    const change = codeChanges[Math.floor(Math.random() * codeChanges.length)];
+                    const changeElement = document.createElement('div');
+                    changeElement.className = 'code-change';
+                    changeElement.textContent = `+ ${change}`;
+                    
+                    liveCodeContent.appendChild(changeElement);
+                    
+                    // Keep only last 10 changes
+                    const changes = liveCodeContent.querySelectorAll('.code-change');
+                    if (changes.length > 10) {
+                        changes[0].remove();
+                    }
+                    
+                    // Scroll to bottom
+                    liveCodeContent.scrollTop = liveCodeContent.scrollHeight;
+                    
+                    // Update live viewer count
+                    const liveViewers = document.getElementById('liveViewers');
+                    if (liveViewers) {
+                        liveViewers.textContent = Math.floor(Math.random() * 5) + 1;
+                    }
+                }
+            }, 5000);
+        }
+
+        function setupFileEditingTracking() {
+            const modalContent = document.getElementById('modalFileContent');
+            if (!modalContent) return;
+
+            let typingTimer;
+            modalContent.addEventListener('input', function() {
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.style.display = 'inline';
+                }
+
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(() => {
+                    if (typingIndicator) {
+                        typingIndicator.style.display = 'none';
+                    }
+                }, 2000);
+
+                // Track editing
+                addGlobalActivity('File being edited in real-time');
+            });
+        }
+
+        function updateLiveUserCount() {
+            setInterval(() => {
+                const variation = Math.floor(Math.random() * 3) - 1;
+                gitData.liveUsers = Math.max(1, gitData.liveUsers + variation);
+                document.getElementById('liveUsers').textContent = gitData.liveUsers;
+            }, 10000);
+        }
+
+        // Tab management with live updates
+        function showTab(tabName) {
+            // Hide all content divs
+            const contents = ['code-content', 'issues-content', 'pulls-content', 'commits-content', 'live-content', 'analytics-content'];
+            contents.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.style.display = 'none';
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected content
+            const contentId = tabName + '-content';
+            const contentElement = document.getElementById(contentId);
+            if (contentElement) {
+                contentElement.style.display = 'block';
+            }
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+
+            // Update data and add activity
+            switch(tabName) {
+                case 'issues':
+                    renderIssues();
+                    addGlobalActivity('Issues tab viewed');
+                    break;
+                case 'pulls':
+                    renderPRs();
+                    addGlobalActivity('Pull requests tab viewed');
+                    break;
+                case 'commits':
+                    renderCommits();
+                    addGlobalActivity('Commit history browsed');
+                    break;
+                case 'live':
+                    addGlobalActivity('Live monitor activated');
+                    updateLiveGlobalActivity();
+                    break;
+                case 'analytics':
+                    updateAnalytics();
+                    addGlobalActivity('Analytics dashboard opened');
+                    break;
+            }
+        }
+
+        function updateLiveGlobalActivity() {
+            const globalActivityList = document.getElementById('globalActivityList');
+            if (!globalActivityList) return;
+
+            globalActivityList.innerHTML = gitData.activities.map(activity => `
+                <div class="activity-item">
+                    <span class="activity-icon">🌍</span>
+                    <span>${activity.message}</span>
+                    <span class="activity-time">${formatTime(activity.timestamp)}</span>
+                </div>
+            `).join('');
+        }
+
+        // File management with live tracking
+        function renderFileList() {
+            const fileList = document.getElementById('fileList');
+            const currentFiles = gitData.branches[gitData.currentBranch].files;
+            
+            const filteredFiles = Object.keys(currentFiles).filter(path => {
+                if (gitData.currentPath === '') {
+                    return !path.includes('/') || path.split('/').length === 2;
+                }
+                return path.startsWith(gitData.currentPath) && path !== gitData.currentPath;
+            });
+
+            const items = [];
+            const directories = new Set();
+            
+            filteredFiles.forEach(path => {
+                const relativePath = gitData.currentPath ? path.substring(gitData.currentPath.length + 1) : path;
+                const parts = relativePath.split('/');
+                
+                if (parts.length > 1) {
+                    directories.add(parts[0]);
+                } else {
+                    const fileData = currentFiles[path];
+                    const isRecent = (new Date() - fileData.lastModified) < 2 * 60 * 60 * 1000; // 2 hours
+                    const isBeingEdited = gitData.currentFile && gitData.currentFile.path === path;
+                    
+                    items.push({
+                        name: parts[0],
+                        path: path,
+                        isDirectory: false,
+                        message: fileData.message,
+                        time: formatTime(fileData.lastModified),
+                        isRecent: isRecent,
+                        isBeingEdited: isBeingEdited
+                    });
+                }
+            });
+
+            directories.forEach(dir => {
+                items.unshift({
+                    name: dir,
+                    path: (gitData.currentPath ? gitData.currentPath + '/' : '') + dir,
+                    isDirectory: true,
+                    message: 'Directory',
+                    time: '',
+                    isRecent: false,
+                    isBeingEdited: false
+                });
+            });
+
+            fileList.innerHTML = items.map(item => `
+                <li class="file-item ${item.isRecent ? 'recently-modified' : ''} ${item.isBeingEdited ? 'being-edited' : ''}" onclick="navigateToFile('${item.path}')">
+                    <span class="file-icon">${item.isDirectory ? '📁' : '📄'}</span>
+                    <a href="#" class="file-name">${item.name}${item.isDirectory ? '/' : ''}</a>
+                    <span class="file-message">${item.message}</span>
+                    <span class="file-time ${item.isRecent ? 'live' : ''}">${item.time}</span>
+                </li>
+            `).join('');
+
+            updateBreadcrumb();
+            
+            // Update analytics
+            analyticsData.totalLines = Object.values(currentFiles).reduce((total, file) => {
+                return total + (file.content.split('\n').length || 0);
+            }, 0);
+        }
+
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const parts = gitData.currentPath.split('/').filter(p => p);
+            
+            let html = '<a href="#" onclick="navigateTo(\'\')">githubception/meta-repository</a>';
+            let currentPath = '';
+            
+            parts.forEach(part => {
+                currentPath += (currentPath ? '/' : '') + part;
+                html += ` / <a href="#" onclick="navigateTo('${currentPath}')">${part}</a>`;
+            });
+            
+            breadcrumb.innerHTML = html;
+        }
+
+        function navigateToFile(path) {
+            const currentFiles = gitData.branches[gitData.currentBranch].files;
+            
+            if (currentFiles[path]) {
+                showFileViewer(path, currentFiles[path]);
+                addGlobalActivity(`File ${path} opened for viewing`);
+                
+                // Track file activity
+                if (!analyticsData.fileActivity[path]) {
+                    analyticsData.fileActivity[path] = 0;
+                }
+                analyticsData.fileActivity[path]++;
+            } else {
+                navigateTo(path);
+            }
+        }
+
+        function navigateTo(path) {
+            gitData.currentPath = path;
+            renderFileList();
+            hideFileViewer();
+        }
+
+        function showFileViewer(path, fileData) {
+            const fileName = document.getElementById('fileName');
+            const fileContent = document.getElementById('fileContent');
+            const fileViewer = document.getElementById('fileViewer');
+            const fileViewers = document.getElementById('fileViewers');
+            
+            fileName.textContent = path;
+            fileContent.textContent = fileData.content;
+            fileViewer.style.display = 'block';
+            
+            // Show live viewer count
+            const viewerCount = Math.floor(Math.random() * 3) + 1;
+            fileViewers.textContent = `👁️ ${viewerCount} viewing`;
+            
+            gitData.currentFile = { path, data: fileData };
+        }
+
+        function hideFileViewer() {
+            document.getElementById('fileViewer').style.display = 'none';
+            gitData.currentFile = null;
+        }
+
+        function backToList() {
+            hideFileViewer();
+            addGlobalActivity('Returned to file browser');
+        }
+
+        function editFile() {
+            if (!gitData.currentFile) return;
+            
+            openFileEditModal(gitData.currentFile.path, gitData.currentFile.data.content);
+            addGlobalActivity(`Started editing ${gitData.currentFile.path}`);
+        }
+
+        function deleteFile() {
+            if (!gitData.currentFile) return;
+            
+            if (confirm(`Are you sure you want to delete ${gitData.currentFile.path}?`)) {
+                delete gitData.branches[gitData.currentBranch].files[gitData.currentFile.path];
+                
+                const commit = {
+                    hash: generateHash(),
+                    message: `Delete ${gitData.currentFile.path}`,
+                    author: 'user',
+                    date: new Date(),
+                    changes: [gitData.currentFile.path]
+                };
+                gitData.branches[gitData.currentBranch].commits.unshift(commit);
+                
+                hideFileViewer();
+                renderFileList();
+                updateLastCommit();
+                showNotification(`${gitData.currentFile.path} deleted successfully`);
+                addGlobalActivity(`File ${gitData.currentFile.path} deleted`);
+                
+                analyticsData.totalChanges++;
+            }
+        }
+
+        // Branch management
+        function switchBranch(branch) {
+            gitData.currentBranch = branch;
+            gitData.currentPath = '';
+            document.getElementById('commitBranch').textContent = branch;
+            renderFileList();
+            renderCommits();
+            updateLastCommit();
+            hideFileViewer();
+            addGlobalActivity(`Switched to branch ${branch}`);
+        }
+
+        // Modal management
+        function openNewFileModal() {
+            document.getElementById('modalTitle').textContent = 'New File';
+            document.getElementById('modalFileName').value = '';
+            document.getElementById('modalFileContent').value = '';
+            document.getElementById('modalCommitMessage').value = 'Add new file';
+            document.getElementById('fileModal').style.display = 'block';
+            
+            gitData.editingFile = null;
+            addGlobalActivity('New file modal opened');
+        }
+
+        function openNewFolderModal() {
+            const folderName = prompt('Enter folder name:');
+            if (folderName && folderName.trim()) {
+                const fullPath = (gitData.currentPath ? gitData.currentPath + '/' : '') + folderName.trim();
+                
+                const placeholderPath = fullPath + '/.gitkeep';
+                gitData.branches[gitData.currentBranch].files[placeholderPath] = {
+                    content: '',
+                    lastModified: new Date(),
+                    message: `Create ${folderName} directory`
+                };
+                
+                const commit = {
+                    hash: generateHash(),
+                    message: `Create ${folderName} directory`,
+                    author: 'user',
+                    date: new Date(),
+                    changes: [placeholderPath]
+                };
+                gitData.branches[gitData.currentBranch].commits.unshift(commit);
+                
+                renderFileList();
+                updateLastCommit();
+                showNotification(`Directory ${folderName} created successfully`);
+                addGlobalActivity(`Directory ${folderName} created`);
+                
+                analyticsData.totalChanges++;
+            }
+        }
+
+        function openFileEditModal(filePath, content) {
+            document.getElementById('modalTitle').textContent = 'Edit File';
+            document.getElementById('modalFileName').value = filePath;
+            document.getElementById('modalFileContent').value = content;
+            document.getElementById('modalCommitMessage').value = `Update ${filePath}`;
+            document.getElementById('fileModal').style.display = 'block';
+            
+            gitData.editingFile = filePath;
+            addGlobalActivity(`Editing ${filePath}`);
+        }
+
+        function openNewIssueModal() {
+            document.getElementById('issueTitle').value = '';
+            document.getElementById('issueDescription').value = '';
+            document.getElementById('issueLabel').value = 'bug';
+            document.getElementById('issueModal').style.display = 'block';
+            addGlobalActivity('New issue modal opened');
+        }
+
+        function openNewPRModal() {
+            document.getElementById('prTitle').value = '';
+            document.getElementById('prDescription').value = '';
+            document.getElementById('prBaseBranch').value = 'main';
+            document.getElementById('prCompareBranch').value = gitData.currentBranch;
+            document.getElementById('prModal').style.display = 'block';
+            addGlobalActivity('New pull request modal opened');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // File operations with live tracking
+        function saveFile() {
+            const fileName = document.getElementById('modalFileName').value.trim();
+            const content = document.getElementById('modalFileContent').value;
+            const commitMessage = document.getElementById('modalCommitMessage').value.trim();
+            
+            if (!fileName || !commitMessage) {
+                alert('Please provide both file name and commit message');
+                return;
+            }
+            
+            const fullPath = gitData.editingFile || ((gitData.currentPath ? gitData.currentPath + '/' : '') + fileName);
+            
+            gitData.branches[gitData.currentBranch].files[fullPath] = {
+                content: content,
+                lastModified: new Date(),
+                message: commitMessage
+            };
+            
+            const commit = {
+                hash: generateHash(),
+                message: commitMessage,
+                author: 'user',
+                date: new Date(),
+                changes: [fullPath]
+            };
+            gitData.branches[gitData.currentBranch].commits.unshift(commit);
+            
+            closeModal('fileModal');
+            renderFileList();
+            updateLastCommit();
+            hideFileViewer();
+            
+            const action = gitData.editingFile ? 'updated' : 'created';
+            showNotification(`File ${fileName} ${action} successfully`);
+            addGlobalActivity(`File ${fileName} ${action}`);
+            
+            analyticsData.totalChanges++;
+            
+            // Track contributor activity
+            if (!analyticsData.contributorActivity['user']) {
+                analyticsData.contributorActivity['user'] = 0;
+            }
+            analyticsData.contributorActivity['user']++;
+        }
+
+        // Issue management
+        function renderIssues() {
+            const issuesList = document.getElementById('issuesList');
+            
+            issuesList.innerHTML = gitData.issues.map(issue => `
+                <div class="issue-item">
+                    <div class="status-indicator ${issue.status === 'open' ? 'status-open' : 'status-closed'}"></div>
+                    <div class="item-details">
+                        <div class="item-title">#${issue.id} ${issue.title}</div>
+                        <div class="item-meta">
+                            opened ${formatTime(issue.created)} by ${issue.author} • 
+                            <span style="background: #21262d; padding: 2px 6px; border-radius: 3px; font-size: 11px;">
+                                ${getLabelIcon(issue.label)} ${issue.label}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <span style="color: #7d8590; font-size: 12px;">💬 ${issue.comments}</span>
+                        <button class="btn btn-small" onclick="toggleIssueStatus(${issue.id})">${issue.status === 'open' ? 'Close' : 'Reopen'}</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('issueCount').textContent = gitData.issues.filter(i => i.status === 'open').length;
+        }
+
+        function createIssue() {
+            const title = document.getElementById('issueTitle').value.trim();
+            const description = document.getElementById('issueDescription').value.trim();
+            const label = document.getElementById('issueLabel').value;
+            
+            if (!title) {
+                alert('Please provide an issue title');
+                return;
+            }
+            
+            const issue = {
+                id: Math.max(...gitData.issues.map(i => i.id), 0) + 1,
+                title: title,
+                description: description,
+                status: 'open',
+                label: label,
+                author: 'user',
+                created: new Date(),
+                comments: 0
+            };
+            
+            gitData.issues.unshift(issue);
+            closeModal('issueModal');
+            renderIssues();
+            showNotification(`Issue #${issue.id} created successfully`);
+            addGlobalActivity(`Issue #${issue.id} created: ${title}`);
+        }
+
+        function toggleIssueStatus(issueId) {
+            const issue = gitData.issues.find(i => i.id === issueId);
+            if (issue) {
+                issue.status = issue.status === 'open' ? 'closed' : 'open';
+                renderIssues();
+                showNotification(`Issue #${issueId} ${issue.status}`);
+                addGlobalActivity(`Issue #${issueId} ${issue.status}`);
+            }
+        }
+
+        function filterIssues(filter) {
+            const issues = document.querySelectorAll('.issue-item');
+            issues.forEach(item => {
+                const statusIndicator = item.querySelector('.status-indicator');
+                const isOpen = statusIndicator.classList.contains('status-open');
+                
+                if (filter === 'all' || (filter === 'open' && isOpen) || (filter === 'closed' && !isOpen)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Pull Request management
+        function renderPRs() {
+            const prList = document.getElementById('prList');
+            
+            prList.innerHTML = gitData.pullRequests.map(pr => `
+                <div class="pr-item">
+                    <div class="status-indicator ${pr.status === 'open' ? 'status-open' : 'status-closed'}"></div>
+                    <div class="item-details">
+                        <div class="item-title">#${pr.id} ${pr.title}</div>
+                        <div class="item-meta">
+                            opened ${formatTime(pr.created)} by ${pr.author} • 
+                            wants to merge ${pr.commits} commits into ${pr.baseBranch} from ${pr.compareBranch}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <span style="color: #7d8590; font-size: 12px;">💬 ${pr.comments} ✅ ${pr.reviews}</span>
+                        <button class="btn btn-small" onclick="mergePR(${pr.id})">Merge</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('prCount').textContent = gitData.pullRequests.filter(pr => pr.status === 'open').length;
+        }
+
+        function createPR() {
+            const title = document.getElementById('prTitle').value.trim();
+            const description = document.getElementById('prDescription').value.trim();
+            const baseBranch = document.getElementById('prBaseBranch').value;
+            const compareBranch = document.getElementById('prCompareBranch').value;
+            
+            if (!title) {
+                alert('Please provide a pull request title');
+                return;
+            }
+            
+            const pr = {
+                id: Math.max(...gitData.pullRequests.map(pr => pr.id), 0) + 1,
+                title: title,
+                description: description,
+                status: 'open',
+                author: 'user',
+                baseBranch: baseBranch,
+                compareBranch: compareBranch,
+                created: new Date(),
+                commits: Math.floor(Math.random() * 10) + 1,
+                comments: 0,
+                reviews: 0
+            };
+            
+            gitData.pullRequests.unshift(pr);
+            closeModal('prModal');
+            renderPRs();
+            showNotification(`Pull request #${pr.id} created successfully`);
+            addGlobalActivity(`Pull request #${pr.id} created: ${title}`);
+        }
+
+        function mergePR(prId) {
+            const pr = gitData.pullRequests.find(p => p.id === prId);
+            if (pr && confirm(`Merge pull request #${prId}: ${pr.title}?`)) {
+                pr.status = 'merged';
+                
+                const mergeCommit = {
+                    hash: generateHash(),
+                    message: `Merge pull request #${prId}: ${pr.title}`,
+                    author: 'user',
+                    date: new Date(),
+                    changes: ['multiple files']
+                };
+                gitData.branches[pr.baseBranch].commits.unshift(mergeCommit);
+                
+                renderPRs();
+                updateLastCommit();
+                showNotification(`Pull request #${prId} merged successfully`);
+                addGlobalActivity(`Pull request #${prId} merged`);
+                
+                analyticsData.totalChanges++;
+            }
+        }
+
+        // Commit management
+        function renderCommits() {
+            const commitsList = document.getElementById('commitsList');
+            const commits = gitData.branches[gitData.currentBranch].commits;
+            
+            commitsList.innerHTML = commits.map(commit => `
+                <div class="commit-item">
+                    <div class="commit-avatar">${commit.author.charAt(0).toUpperCase()}</div>
+                    <div class="item-details">
+                        <div class="item-title">${commit.message}</div>
+                        <div class="item-meta">${commit.author} committed ${formatTime(commit.date)}</div>
+                    </div>
+                    <div class="commit-hash" onclick="showCommitDetails('${commit.hash}')">${commit.hash}</div>
+                </div>
+            `).join('');
+        }
+
+        function showCommitDetails(hash) {
+            const commit = gitData.branches[gitData.currentBranch].commits.find(c => c.hash === hash);
+            if (commit) {
+                alert(`Commit ${hash}\n\nMessage: ${commit.message}\nAuthor: ${commit.author}\nDate: ${commit.date.toLocaleString()}\nFiles changed: ${commit.changes.join(', ')}`);
+                addGlobalActivity(`Commit ${hash} details viewed`);
+            }
+        }
+
+        // Statistics and interactions
+        function updateStats() {
+            document.getElementById('starCount').textContent = gitData.stats.stars;
+            document.getElementById('watchCount').textContent = gitData.stats.watchers;
+            document.getElementById('forkCount').textContent = gitData.stats.forks;
+        }
+
+        function toggleStar() {
+            gitData.userStars = !gitData.userStars;
+            gitData.stats.stars += gitData.userStars ? 1 : -1;
+            updateStats();
+            
+            // Visual feedback
+            const starStat = document.getElementById('starStat');
+            if (gitData.userStars) {
+                starStat.classList.add('starred');
+                showStarAnimation(starStat);
+                analyticsData.starsThisHour++;
+            } else {
+                starStat.classList.remove('starred');
+            }
+            
+            const action = gitData.userStars ? 'starred' : 'unstarred';
+            showNotification(`Repository ${action}`);
+            addGlobalActivity(`Repository ${action} by user`);
+        }
+
+        function toggleWatch() {
+            gitData.userWatching = !gitData.userWatching;
+            gitData.stats.watchers += gitData.userWatching ? 1 : -1;
+            updateStats();
+            
+            const watchStat = document.getElementById('watchStat');
+            if (gitData.userWatching) {
+                watchStat.classList.add('watching');
+            } else {
+                watchStat.classList.remove('watching');
+            }
+            
+            const action = gitData.userWatching ? 'watching' : 'not watching';
+            showNotification(`Now ${action} repository`);
+            addGlobalActivity(`User ${action} repository`);
+        }
+
+        function showStarAnimation(element) {
+            const animation = document.createElement('div');
+            animation.className = 'stat-animation';
+            animation.textContent = '+1';
+            element.style.position = 'relative';
+            element.appendChild(animation);
+            
+            setTimeout(() => {
+                if (animation.parentNode) {
+                    animation.parentNode.removeChild(animation);
+                }
+            }, 1000);
+        }
+
+        // Analytics functions
+        function calculateAnalytics() {
+            const currentFiles = gitData.branches[gitData.currentBranch].files;
+            analyticsData.totalLines = Object.values(currentFiles).reduce((total, file) => {
+                return total + (file.content.split('\n').length || 0);
+            }, 0);
+        }
+
+        function updateAnalytics() {
+            document.getElementById('totalChanges').textContent = analyticsData.totalChanges;
+            document.getElementById('totalLines').textContent = analyticsData.totalLines.toLocaleString();
+            document.getElementById('activeSessions').textContent = analyticsData.activeSessions;
+            document.getElementById('starsThisHour').textContent = analyticsData.starsThisHour;
+            
+            updateMostActiveFiles();
+            updateContributorActivity();
+        }
+
+        function updateMostActiveFiles() {
+            const container = document.getElementById('mostActiveFiles');
+            if (!container) return;
+
+            const sortedFiles = Object.entries(analyticsData.fileActivity)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 5);
+
+            if (sortedFiles.length === 0) {
+                container.innerHTML = '<div style="color: #7d8590; font-style: italic;">No file activity yet</div>';
+                return;
+            }
+
+            container.innerHTML = sortedFiles.map(([file, count]) => `
+                <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #30363d;">
+                    <span style="color: #539bf5;">📄 ${file}</span>
+                    <span style="color: #28a745; font-weight: bold;">${count} views</span>
+                </div>
+            `).join('');
+        }
+
+        function updateContributorActivity() {
+            const container = document.getElementById('contributorActivity');
+            if (!container) return;
+
+            const contributors = Object.entries(analyticsData.contributorActivity)
+                .sort(([,a], [,b]) => b - a);
+
+            if (contributors.length === 0) {
+                container.innerHTML = '<div style="color: #7d8590; font-style: italic;">No contributor activity yet</div>';
+                return;
+            }
+
+            container.innerHTML = contributors.map(([contributor, count]) => `
+                <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #30363d;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <div class="commit-avatar" style="width: 20px; height: 20px; font-size: 10px;">${contributor.charAt(0).toUpperCase()}</div>
+                        ${contributor}
+                    </span>
+                    <span style="color: #28a745; font-weight: bold;">${count} contributions</span>
+                </div>
+            `).join('');
+        }
+
+        function exportAnalytics() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                repository: 'githubception/meta-repository',
+                analytics: analyticsData,
+                recentActivity: gitData.activities.slice(0, 10)
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'githubception-analytics.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showNotification('Analytics data exported successfully');
+            addGlobalActivity('Analytics data exported');
+        }
+
+        // Search functionality
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const query = event.target.value.toLowerCase().trim();
+                if (query) {
+                    performSearch(query);
+                    addGlobalActivity(`Searched for: ${query}`);
+                }
+            }
+        }
+
+        function performSearch(query) {
+            const results = [];
+            const currentFiles = gitData.branches[gitData.currentBranch].files;
+            
+            Object.keys(currentFiles).forEach(path => {
+                if (path.toLowerCase().includes(query) || 
+                    currentFiles[path].content.toLowerCase().includes(query)) {
+                    results.push({
+                        type: 'file',
+                        path: path,
+                        matches: currentFiles[path].content.toLowerCase().split(query).length - 1
+                    });
+                }
+            });
+            
+            gitData.issues.forEach(issue => {
+                if (issue.title.toLowerCase().includes(query) || 
+                    issue.description.toLowerCase().includes(query)) {
+                    results.push({
+                        type: 'issue',
+                        title: issue.title,
+                        id: issue.id
+                    });
+                }
+            });
+
+            gitData.branches[gitData.currentBranch].commits.forEach(commit => {
+                if (commit.message.toLowerCase().includes(query)) {
+                    results.push({
+                        type: 'commit',
+                        message: commit.message,
+                        hash: commit.hash
+                    });
+                }
+            });
+            
+            if (results.length > 0) {
+                let resultText = `Search results for "${query}":\n\n`;
+                results.forEach(result => {
+                    switch(result.type) {
+                        case 'file':
+                            resultText += `📄 ${result.path} (${result.matches} matches)\n`;
+                            break;
+                        case 'issue':
+                            resultText += `🐛 Issue #${result.id}: ${result.title}\n`;
+                            break;
+                        case 'commit':
+                            resultText += `📝 ${result.hash}: ${result.message}\n`;
+                            break;
+                    }
+                });
+                alert(resultText);
+            } else {
+                showNotification(`No results found for "${query}"`);
+            }
+        }
+
+        // Utility functions
+        function formatTime(date) {
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'just now';
+            if (minutes < 60) return `${minutes} minutes ago`;
+            if (hours < 24) return `${hours} hours ago`;
+            return `${days} days ago`;
+        }
+
+        function generateHash() {
+            return Math.random().toString(36).substr(2, 7);
+        }
+
+        function getLabelIcon(label) {
+            const icons = {
+                bug: '🐛',
+                enhancement: '✨',
+                question: '❓',
+                documentation: '📚'
+            };
+            return icons[label] || '🏷️';
+        }
+
+        function updateLastCommit() {
+            const lastCommit = gitData.branches[gitData.currentBranch].commits[0];
+            if (lastCommit) {
+                document.getElementById('lastCommit').textContent = `Latest commit: ${formatTime(lastCommit.date)}`;
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'k':
+                            e.preventDefault();
+                            document.getElementById('searchBar').focus();
+                            break;
+                        case 'n':
+                            e.preventDefault();
+                            if (e.shiftKey) {
+                                openNewFolderModal();
+                            } else {
+                                openNewFileModal();
+                            }
+                            break;
+                    }
+                }
+                
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                }
+            });
+
+            document.getElementById('searchBar').title = 'Press Ctrl+K to focus';
+            
+            console.log('🌀 GitHubception Live Edition initialized successfully!');
+            console.log('🔴 Live monitoring active - watch the repository edit itself!');
+            console.log('📊 Analytics tracking enabled');
+            console.log('🎯 You are now using GitHub to manage GitHub managing itself...');
+        });
     </script>
 </body>
 </html>
