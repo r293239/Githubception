@@ -2000,6 +2000,961 @@ If GitHubception broke your brain in a good way, give it a star! The star counte
             console.log('🎯 You are now using GitHub to manage GitHub!');
             console.log('🔮 Reality is optional beyond this point...');
         });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHubception - Live Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #e6edf3;
+            line-height: 1.5;
+        }
+
+        .header {
+            background-color: #21262d;
+            border-bottom: 1px solid #30363d;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #f78166, #fa7970);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #e6edf3;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+
+        .nav a:hover {
+            background-color: #30363d;
+        }
+
+        .nav a.live::after {
+            content: '🔴';
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 8px;
+        }
+
+        .search-bar {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #e6edf3;
+            width: 300px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #28a745;
+            font-size: 12px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        .repo-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .repo-name {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .repo-visibility {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #7d8590;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            margin-left: auto;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #7d8590;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 4px 8px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .stat:hover {
+            color: #e6edf3;
+            background-color: #21262d;
+        }
+
+        .stat.starred {
+            color: #f1c40f;
+        }
+
+        .stat.watching {
+            color: #3498db;
+        }
+
+        .stat-animation {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #28a745;
+            font-size: 12px;
+            animation: fadeUp 1s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .tab {
+            padding: 12px 16px;
+            color: #7d8590;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #e6edf3;
+            border-bottom-color: #f78166;
+        }
+
+        .tab:hover {
+            color: #e6edf3;
+        }
+
+        .tab-notification {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #f85149;
+            color: white;
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 10px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .file-browser {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .file-header {
+            background-color: #161b22;
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .branch-selector {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #e6edf3;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .file-list {
+            list-style: none;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-bottom: 1px solid #30363d;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .file-item:hover {
+            background-color: #161b22;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-item.recently-modified {
+            background-color: #1a472a;
+            border-left: 3px solid #28a745;
+        }
+
+        .file-item.being-edited {
+            background-color: #1a3a4a;
+            border-left: 3px solid #3498db;
+        }
+
+        .file-item.being-edited::after {
+            content: '👁️ Being viewed';
+            position: absolute;
+            right: 16px;
+            font-size: 11px;
+            color: #3498db;
+        }
+
+        .file-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+            color: #7d8590;
+        }
+
+        .file-name {
+            flex: 1;
+            color: #539bf5;
+            text-decoration: none;
+        }
+
+        .file-message {
+            color: #7d8590;
+            font-size: 14px;
+            margin-right: 16px;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-time {
+            color: #7d8590;
+            font-size: 12px;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .file-time.live {
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #2ea043;
+        }
+
+        .btn-secondary {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #e6edf3;
+        }
+
+        .btn-secondary:hover {
+            background-color: #30363d;
+        }
+
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #21262d;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            color: #7d8590;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #e6edf3;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #e6edf3;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .file-editor {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 14px;
+            min-height: 400px;
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .editor-info {
+            font-size: 12px;
+            color: #7d8590;
+        }
+
+        .live-typing-indicator {
+            color: #28a745;
+            font-size: 11px;
+            margin-left: 8px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .file-viewer {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+
+        .file-viewer-header {
+            background-color: #161b22;
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .file-viewer-content {
+            padding: 16px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .breadcrumb {
+            margin-bottom: 16px;
+            color: #7d8590;
+        }
+
+        .breadcrumb a {
+            color: #539bf5;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .activity-feed {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            margin-top: 24px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .activity-header {
+            background-color: #161b22;
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .activity-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item.new {
+            background-color: #1a472a;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .activity-icon {
+            width: 16px;
+            height: 16px;
+            color: #28a745;
+        }
+
+        .activity-time {
+            color: #7d8590;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .live-code-viewer {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            margin-top: 24px;
+        }
+
+        .live-code-header {
+            background-color: #161b22;
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-code-content {
+            padding: 16px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+
+        .code-change {
+            background-color: #1a472a;
+            border-left: 3px solid #28a745;
+            padding: 4px 8px;
+            margin: 2px 0;
+            border-radius: 3px;
+            animation: highlight 2s ease-out;
+        }
+
+        @keyframes highlight {
+            0% { background-color: #28a745; }
+            100% { background-color: #1a472a; }
+        }
+
+        .typing-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #28a745;
+            animation: typing 1.4s infinite both;
+            margin-right: 4px;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .issue-item, .pr-item, .commit-item {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .issue-item:hover, .pr-item:hover, .commit-item:hover {
+            background-color: #161b22;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-open {
+            background-color: #238636;
+        }
+
+        .status-closed {
+            background-color: #f85149;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: #e6edf3;
+        }
+
+        .item-meta {
+            font-size: 12px;
+            color: #7d8590;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .commit-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f78166, #fa7970);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .commit-hash {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            background-color: #161b22;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .commit-hash:hover {
+            background-color: #21262d;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #238636;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            z-index: 1001;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 300px;
+        }
+
+        .notification.error {
+            background: #f85149;
+        }
+
+        .notification.info {
+            background: #1f6feb;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .global-activity {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 12px;
+            max-width: 300px;
+            z-index: 999;
+        }
+
+        .global-activity-header {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .global-activity-item {
+            font-size: 12px;
+            color: #7d8590;
+            margin-bottom: 4px;
+            padding: 2px 0;
+        }
+
+        .global-activity-item.new {
+            color: #28a745;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">G</div>
+            GitHubception
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>LIVE</span>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="#" onclick="showTab('code')">Repositories</a>
+            <a href="#" onclick="showTab('issues')">Issues</a>
+            <a href="#" onclick="showTab('pulls')">Pull requests</a>
+            <a href="#" onclick="showTab('live')" class="live">🔴 Live Code Monitor</a>
+            <a href="#" onclick="showTab('analytics')">📊 Analytics</a>
+        </nav>
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search repositories..." onkeyup="handleSearch(event)">
+    </header>
+
+    <div class="container">
+        <div class="repo-header">
+            <span class="repo-name">githubception/meta-repository</span>
+            <span class="repo-visibility">Public</span>
+            <div class="stats">
+                <div class="stat" onclick="toggleStar()" id="starStat">
+                    <span>⭐</span>
+                    <span id="starCount">42</span>
+                </div>
+                <div class="stat" onclick="toggleWatch()" id="watchStat">
+                    <span>👁</span>
+                    <span id="watchCount">12</span>
+                </div>
+                <div class="stat">
+                    <span>🍴</span>
+                    <span id="forkCount">7</span>
+                </div>
+                <div class="stat">
+                    <span>🔥</span>
+                    <span id="liveUsers">1</span>
+                    <span style="font-size: 10px;">online</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <a href="#" class="tab active" onclick="showTab('code')">📄 Code</a>
+            <a href="#" class="tab" onclick="showTab('issues')">🐛 Issues 
+                <span id="issueCount" class="tab-notification">3</span>
+            </a>
+            <a href="#" class="tab" onclick="showTab('pulls')">🔀 Pull requests 
+                <span id="prCount" class="tab-notification">1</span>
+            </a>
+            <a href="#" class="tab" onclick="showTab('commits')">📝 Commits</a>
+            <a href="#" class="tab" onclick="showTab('live')">🔴 Live Monitor</a>
+            <a href="#" class="tab" onclick="showTab('analytics')">📊 Analytics</a>
+        </div>
+
+        <!-- Code Tab -->
+        <div id="code-content">
+            <div class="breadcrumb" id="breadcrumb">
+                <a href="#" onclick="navigateTo('')">githubception/meta-repository</a>
+            </div>
+            
+            <div class="file-browser">
+                <div class="file-header">
+                    <select class="branch-selector" id="branchSelector" onchange="switchBranch(this.value)">
+                        <option value="main">🌿 main</option>
+                        <option value="develop">🌿 develop</option>
+                        <option value="feature/recursive-git">🌿 feature/recursive-git</option>
+                    </select>
+                    <button class="btn btn-small" onclick="openNewFileModal()">+ New file</button>
+                    <button class="btn btn-secondary btn-small" onclick="openNewFolderModal()">📁 New folder</button>
+                    <span style="margin-left: auto; color: #7d8590; font-size: 14px;" id="lastCommit">Latest commit: 2 hours ago</span>
+                </div>
+                <ul class="file-list" id="fileList">
+                    <!-- Files will be populated by JavaScript -->
+                </ul>
+            </div>
+
+            <div class="file-viewer" id="fileViewer" style="display: none;">
+                <div class="file-viewer-header">
+                    <span id="fileName"></span>
+                    <div>
+                        <span id="fileViewers" style="font-size: 12px; color: #7d8590; margin-right: 16px;"></span>
+                        <button class="btn btn-small" onclick="editFile()">✏️ Edit</button>
+                        <button class="btn btn-secondary btn-small" onclick="deleteFile()">🗑️ Delete</button>
+                        <button class="btn btn-secondary btn-small" onclick="backToList()">← Back</button>
+                    </div>
+                </div>
+                <div class="file-viewer-content" id="fileContent"></div>
+            </div>
+
+            <div class="activity-feed" id="activityFeed">
+                <div class="activity-header">
+                    <span class="typing-indicator"></span>
+                    Recent Activity
+                </div>
+                <div id="activityList">
+                    <!-- Activity items will be added here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Code Monitor Tab -->
+        <div id="live-content" style="display: none;">
+            <div class="live-code-viewer">
+                <div class="live-code-header">
+                    <span class="typing-indicator"></span>
+                    <span>Live Code Changes</span>
+                    <div style="margin-left: auto; font-size: 12px; color: #7d8590;">
+                        <span id="liveViewers">0</span> watching
+                    </div>
+                </div>
+                <div class="live-code-content" id="liveCodeContent">
+                    <div style="color: #7d8590; font-style: italic;">
+                        Monitoring live code changes... Any edits made to files will appear here in real-time.
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-feed">
+                <div class="activity-header">
+                    🌍 Global Repository Activity
+                </div>
+                <div id="globalActivityList">
+                    <!-- Global activity will be populated -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics-content" style="display: none;">
+            <div class="file-browser">
+                <div class="file-header">
+                    <span>📊 Repository Analytics</span>
+                    <button class="btn btn-small" onclick="exportAnalytics()">Export Data</button>
+                </div>
+                <div style="padding: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div class="commit-item">
+                            <div class="item-details">
+                                <div class="item-title">Total File Changes</div>
+                                <div style="font-size: 24px; color: #28a745; font-weight: bold;" id="totalChanges">0</div>
+                                <div class="item-meta">Since repository creation</div>
+                            </div>
+                        </div>
+                        <div class="commit-item">
+                            <div class="item-details">
+                                <div class="item-title">Lines of Code</div>
+                                <div style="font-size: 24px; color: #1f6feb; font-weight: bold;" id="totalLines">0</div>
+                                <div class="item-meta">Across all files</div>
+                            </div>
+                        </div>
+                        <div class="commit-item">
+                            <div class="item-details">
+                                <div class="item-title">Active Sessions</div>
+                                <div style="font-size: 24px; color: #f1c40f; font-weight: bold;" id="activeSessions">1</div>
+                                <div class="item-meta">Users currently coding</div>
+                            </div>
+                        </div>
+                        <div class="commit-item">
+                            <div class="item-details">
+                                <div class="item-title">Stars This Hour</div>
+                                <div style="font-size: 24px; color: #f78166; font-weight: bold;" id="starsThisHour">0</div>
+                                <div class="item-meta">Growth rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="live-code-viewer" style="margin-top: 24px;">
+                        <div class="live-code-header">
+                            📈 Most Active Files
+                        </div>
+                        <div style="padding: 16px;" id="mostActiveFiles">
+                            <!-- Will be populated with file activity stats -->
+                        </div>
+                    </div>
+
+                    <div class="live-code-viewer" style="margin-top: 24px;">
+                        <div class="live-code-header">
+                            👥 Contributor Activity
+                        </div>
+                        <div style="padding: 16px;" id="contributorActivity">
+                            <!-- Will be populated with contributor stats -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other tabs (Issues, PRs, Commits) remain the same but hidden initially -->
+        <div id="issues-content" style="display: none;">
+            <div class="file-browser">
+                <div class="file-header">
+                    <button class="btn" onclick="openNewIssueModal()">New issue</button>
+                    <select class="branch-selector" onchange="filterIssues(this.value)">
+                        <option value="all">All issues</option>
+                        <option value="open">Open</option>
+                        <option value="closed">Closed</option>
+                    </select>
     </script>
 </body>
 </html>
