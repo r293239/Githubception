@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHubception</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #e6edf3;
+            line-height: 1.5;
+        }
+
+        .header {
+            background-color: #21262d;
+            border-bottom: 1px solid #30363d;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #f78166, #fa7970);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #e6edf3;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .nav a:hover {
+            background-color: #30363d;
+        }
+
+        .search-bar {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #e6edf3;
+            width: 300px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        .repo-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .repo-name {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .repo-visibility {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #7d8590;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            margin-left: auto;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #7d8590;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .tab {
+            padding: 12px 16px;
+            color: #7d8590;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #e6edf3;
+            border-bottom-color: #f78166;
+        }
+
+        .tab:hover {
+            color: #e6edf3;
+        }
+
+        .file-browser {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .file-header {
+            background-color: #161b22;
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .branch-selector {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #e6edf3;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .file-list {
+            list-style: none;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-bottom: 1px solid #30363d;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+
+        .file-item:hover {
+            background-color: #161b22;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+            color: #7d8590;
+        }
+
+        .file-name {
+            flex: 1;
+            color: #539bf5;
+            text-decoration: none;
+        }
+
+        .file-message {
+            color: #7d8590;
+            font-size: 14px;
+            margin-right: 16px;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-time {
+            color: #7d8590;
+            font-size: 12px;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .readme {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            margin-top: 24px;
+            overflow: hidden;
+        }
+
+        .readme-header {
+            background-color: #161b22;
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            font-weight: 600;
+        }
+
+        .readme-content {
+            padding: 24px;
+            line-height: 1.6;
+        }
+
+        .readme-content h1 {
+            color: #e6edf3;
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .readme-content h2 {
+            color: #e6edf3;
+            margin: 24px 0 12px 0;
+            font-size: 20px;
+        }
+
+        .readme-content p {
+            margin-bottom: 16px;
+            color: #c9d1d9;
+        }
+
+        .readme-content code {
+            background-color: #161b22;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            color: #e6edf3;
+        }
+
+        .code-block {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 16px 0;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            overflow-x: auto;
+        }
+
+        .btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #2ea043;
+        }
+
+        .btn-secondary {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #e6edf3;
+        }
+
+        .btn-secondary:hover {
+            background-color: #30363d;
+        }
+
+        .commit-list {
+            margin-top: 24px;
+        }
+
+        .commit-item {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .commit-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f78166, #fa7970);
+        }
+
+        .commit-details {
+            flex: 1;
+        }
+
+        .commit-message {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .commit-meta {
+            font-size: 12px;
+            color: #7d8590;
+        }
+
+        .commit-hash {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            background-color: #161b22;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">G</div>
+            GitHubception
+        </div>
+        <nav class="nav">
+            <a href="#" onclick="showTab('code')">Repositories</a>
+            <a href="#" onclick="showTab('issues')">Issues</a>
+            <a href="#" onclick="showTab('pulls')">Pull requests</a>
+            <a href="#">Actions</a>
+            <a href="#">Projects</a>
+        </nav>
+        <input type="text" class="search-bar" placeholder="Search repositories...">
+    </header>
+
+    <div class="container">
+        <div class="repo-header">
+            <span class="repo-name">githubception/meta-repository</span>
+            <span class="repo-visibility">Public</span>
+            <div class="stats">
+                <div class="stat">
+                    <span>⭐</span>
+                    <span id="stars">42</span>
+                </div>
+                <div class="stat">
+                    <span>👁</span>
+                    <span>12</span>
+                </div>
+                <div class="stat">
+                    <span>🍴</span>
+                    <span>7</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <a href="#" class="tab active" onclick="showTab('code')">📄 Code</a>
+            <a href="#" class="tab" onclick="showTab('issues')">🐛 Issues <span style="background: #21262d; padding: 2px 6px; border-radius: 10px; font-size: 12px;">3</span></a>
+            <a href="#" class="tab" onclick="showTab('pulls')">🔀 Pull requests <span style="background: #21262d; padding: 2px 6px; border-radius: 10px; font-size: 12px;">1</span></a>
+            <a href="#" class="tab" onclick="showTab('commits')">📝 Commits</a>
+        </div>
+
+        <div id="code-content">
+            <div class="file-browser">
+                <div class="file-header">
+                    <select class="branch-selector" onchange="switchBranch(this.value)">
+                        <option value="main">🌿 main</option>
+                        <option value="develop">🌿 develop</option>
+                        <option value="feature/recursive-git">🌿 feature/recursive-git</option>
+                    </select>
+                    <span style="margin-left: auto; color: #7d8590; font-size: 14px;">Latest commit: 2 hours ago</span>
+                </div>
+                <ul class="file-list" id="file-list">
+                    <li class="file-item" onclick="navigateToFile('.github/')">
+                        <span class="file-icon">📁</span>
+                        <a href="#" class="file-name">.github/</a>
+                        <span class="file-message">Add GitHub Actions workflow</span>
+                        <span class="file-time">3 days ago</span>
+                    </li>
+                    <li class="file-item" onclick="navigateToFile('src/')">
+                        <span class="file-icon">📁</span>
+                        <a href="#" class="file-name">src/</a>
+                        <span class="file-message">Implement recursive git interface</span>
+                        <span class="file-time">2 hours ago</span>
+                    </li>
+                    <li class="file-item" onclick="navigateToFile('docs/')">
+                        <span class="file-icon">📁</span>
+                        <a href="#" class="file-name">docs/</a>
+                        <span class="file-message">Update documentation</span>
+                        <span class="file-time">1 day ago</span>
+                    </li>
+                    <li class="file-item" onclick="navigateToFile('.gitignore')">
+                        <span class="file-icon">📄</span>
+                        <a href="#" class="file-name">.gitignore</a>
+                        <span class="file-message">Add common ignore patterns</span>
+                        <span class="file-time">5 days ago</span>
+                    </li>
+                    <li class="file-item" onclick="navigateToFile('package.json')">
+                        <span class="file-icon">📄</span>
+                        <a href="#" class="file-name">package.json</a>
+                        <span class="file-message">Update dependencies</span>
+                        <span class="file-time">2 hours ago</span>
+                    </li>
+                    <li class="file-item" onclick="navigateToFile('README.md')">
+                        <span class="file-icon">📄</span>
+                        <a href="#" class="file-name">README.md</a>
+                        <span class="file-message">Add installation instructions</span>
+                        <span class="file-time">4 hours ago</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="readme">
+                <div class="readme-header">
+                    📖 README.md
+                </div>
+                <div class="readme-content">
+                    <h1>GitHubception 🌀</h1>
+                    <p>A meta-repository that implements GitHub inside GitHub. This project demonstrates the recursive nature of version control by creating a Git interface that can be hosted on Git platforms.</p>
+                    
+                    <h2>Features</h2>
+                    <p>✨ Full repository browser with file navigation<br>
+                    🔍 Search functionality across files and commits<br>
+                    📝 Issue and pull request management<br>
+                    🌿 Branch switching and merging capabilities<br>
+                    📊 Repository statistics and insights<br>
+                    🎨 GitHub-like interface with dark theme</p>
+
+                    <h2>Installation</h2>
+                    <div class="code-block">npm install githubception
+git clone https://github.com/githubception/meta-repository.git
+cd meta-repository
+npm start</div>
+
+                    <h2>Philosophy</h2>
+                    <p>This project explores the concept of self-reference in software development. By implementing a Git interface within a Git repository, we create an infinite loop of version control - a digital ouroboros eating its own tail.</p>
+
+                    <p>The recursive nature allows developers to manage the very tool they use to manage their code, creating interesting philosophical questions about digital self-reference and meta-programming.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="issues-content" style="display: none;">
+            <div class="file-browser">
+                <div class="file-header">
+                    <button class="btn">New issue</button>
+                </div>
+                <div style="padding: 24px;">
+                    <div class="commit-item">
+                        <div style="width: 8px; height: 8px; background: #28a745; border-radius: 50%; margin-right: 8px;"></div>
+                        <div class="commit-details">
+                            <div class="commit-message">#3 Infinite recursion in self-referential commits</div>
+                            <div class="commit-meta">opened 2 days ago by recursion-master</div>
+                        </div>
+                        <div style="color: #7d8590; font-size: 12px;">💬 7</div>
+                    </div>
+                    <div class="commit-item">
+                        <div style="width: 8px; height: 8px; background: #f85149; border-radius: 50%; margin-right: 8px;"></div>
+                        <div class="commit-details">
+                            <div class="commit-message">#2 Meta-meta-repository causing stack overflow</div>
+                            <div class="commit-meta">opened 5 days ago by paradox-dev</div>
+                        </div>
+                        <div style="color: #7d8590; font-size: 12px;">💬 12</div>
+                    </div>
+                    <div class="commit-item">
+                        <div style="width: 8px; height: 8px; background: #28a745; border-radius: 50%; margin-right: 8px;"></div>
+                        <div class="commit-details">
+                            <div class="commit-message">#1 Add support for nested repositories</div>
+                            <div class="commit-meta">opened 1 week ago by inception-coder</div>
+                        </div>
+                        <div style="color: #7d8590; font-size: 12px;">💬 4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pulls-content" style="display: none;">
+            <div class="file-browser">
+                <div class="file-header">
+                    <button class="btn">New pull request</button>
+                </div>
+                <div style="padding: 24px;">
+                    <div class="commit-item">
+                        <div style="width: 8px; height: 8px; background: #28a745; border-radius: 50%; margin-right: 8px;"></div>
+                        <div class="commit-details">
+                            <div class="commit-message">#1 Implement GitHub inside GitHub inside GitHub</div>
+                            <div class="commit-meta">opened 3 hours ago by meta-programmer • wants to merge 42 commits into main from feature/recursive-git</div>
+                        </div>
+                        <div style="color: #7d8590; font-size: 12px;">💬 23 ✅ 15</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="commits-content" style="display: none;">
+            <div class="commit-list">
+                <div class="commit-item">
+                    <div class="commit-avatar"></div>
+                    <div class="commit-details">
+                        <div class="commit-message">Implement recursive repository browser</div>
+                        <div class="commit-meta">meta-programmer committed 2 hours ago</div>
+                    </div>
+                    <div class="commit-hash">a1b2c3d</div>
+                </div>
+                <div class="commit-item">
+                    <div class="commit-avatar"></div>
+                    <div class="commit-details">
+                        <div class="commit-message">Add GitHub Actions for CI/CD of GitHub clone</div>
+                        <div class="commit-meta">automation-bot committed 4 hours ago</div>
+                    </div>
+                    <div class="commit-hash">d4e5f6g</div>
+                </div>
+                <div class="commit-item">
+                    <div class="commit-avatar"></div>
+                    <div class="commit-details">
+                        <div class="commit-message">Fix infinite loop in self-referential logic</div>
+                        <div class="commit-meta">bug-hunter committed 1 day ago</div>
+                    </div>
+                    <div class="commit-hash">g7h8i9j</div>
+                </div>
+                <div class="commit-item">
+                    <div class="commit-avatar"></div>
+                    <div class="commit-details">
+                        <div class="commit-message">Initial commit: The beginning of the end</div>
+                        <div class="commit-meta">paradox-dev committed 1 week ago</div>
+                    </div>
+                    <div class="commit-hash">1a2b3c4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentBranch = 'main';
+        let starCount = 42;
+
+        function showTab(tabName) {
+            // Hide all content divs
+            const contents = ['code-content', 'issues-content', 'pulls-content', 'commits-content'];
+            contents.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.style.display = 'none';
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected content
+            const contentId = tabName + '-content';
+            const contentElement = document.getElementById(contentId);
+            if (contentElement) {
+                contentElement.style.display = 'block';
+            }
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function switchBranch(branch) {
+            currentBranch = branch;
+            const fileList = document.getElementById('file-list');
+            
+            // Simulate different files for different branches
+            const branchFiles = {
+                'main': [
+                    {icon: '📁', name: '.github/', message: 'Add GitHub Actions workflow', time: '3 days ago'},
+                    {icon: '📁', name: 'src/', message: 'Implement recursive git interface', time: '2 hours ago'},
+                    {icon: '📁', name: 'docs/', message: 'Update documentation', time: '1 day ago'},
+                    {icon: '📄', name: '.gitignore', message: 'Add common ignore patterns', time: '5 days ago'},
+                    {icon: '📄', name: 'package.json', message: 'Update dependencies', time: '2 hours ago'},
+                    {icon: '📄', name: 'README.md', message: 'Add installation instructions', time: '4 hours ago'}
+                ],
+                'develop': [
+                    {icon: '📁', name: 'experimental/', message: 'Add experimental features', time: '1 hour ago'},
+                    {icon: '📁', name: 'src/', message: 'WIP: Advanced recursive logic', time: '30 minutes ago'},
+                    {icon: '📄', name: 'TODO.md', message: 'Add development roadmap', time: '2 hours ago'},
+                    {icon: '📄', name: 'package.json', message: 'Add dev dependencies', time: '1 hour ago'}
+                ],
+                'feature/recursive-git': [
+                    {icon: '📁', name: 'inception/', message: 'Deep recursion implementation', time: '15 minutes ago'},
+                    {icon: '📄', name: 'recursion.js', message: 'Add infinite loop protection', time: '10 minutes ago'},
+                    {icon: '📄', name: 'meta.json', message: 'Configure meta-programming', time: '5 minutes ago'}
+                ]
+            };
+
+            const files = branchFiles[branch] || branchFiles['main'];
+            fileList.innerHTML = files.map(file => `
+                <li class="file-item" onclick="navigateToFile('${file.name}')">
+                    <span class="file-icon">${file.icon}</span>
+                    <a href="#" class="file-name">${file.name}</a>
+                    <span class="file-message">${file.message}</span>
+                    <span class="file-time">${file.time}</span>
+                </li>
+            `).join('');
+        }
+
+        function navigateToFile(fileName) {
+            if (fileName.includes('/')) {
+                // It's a directory, simulate navigation
+                alert(`Navigating to directory: ${fileName}\n\nIn a real implementation, this would show the contents of the ${fileName} directory, creating another level of the recursive GitHub interface!`);
+            } else {
+                // It's a file, simulate file view
+                alert(`Opening file: ${fileName}\n\nThis would show the file contents with syntax highlighting, edit capabilities, and version history - all within our GitHub clone!`);
+            }
+        }
+
+        // Simulate dynamic star count
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                starCount += Math.floor(Math.random() * 3) + 1;
+                document.getElementById('stars').textContent = starCount;
+            }
+        }, 5000);
+
+        // Add some interactive flourishes
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate live updates
+            setTimeout(() => {
+                const header = document.querySelector('.file-header span');
+                if (header) header.textContent = 'Latest commit: just now';
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
